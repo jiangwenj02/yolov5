@@ -179,7 +179,7 @@ def test(data,
                     if file_name == path.stem:
                         image_id = img_id
                         break
-                    
+
                 #image_id = int(path.stem) if path.stem.isnumeric() else path.stem
                 box = xyxy2xywh(predn[:, :4])  # xywh
                 box[:, :2] -= box[:, 2:] / 2  # xy center to top-left corner
@@ -278,8 +278,8 @@ def test(data,
             
             pred = anno.loadRes(pred_json)  # init predictions api
             eval = COCOeval(anno, pred, 'bbox')
-            if is_coco:
-                eval.params.imgIds = [int(Path(x).stem) for x in dataloader.dataset.img_files]  # image IDs to evaluate
+            # if is_coco:
+            #     eval.params.imgIds = [int(Path(x).stem) for x in dataloader.dataset.img_files]  # image IDs to evaluate
             eval.evaluate()
             eval.accumulate()
             eval.summarize()
