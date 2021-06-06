@@ -172,8 +172,8 @@ def test(data,
             # Append to pycocotools JSON dictionary
             if save_json:
                 # [{"image_id": 42, "category_id": 18, "bbox": [258.15, 41.29, 348.26, 243.78], "score": 0.236}, ...
-                import pdb
-                pdb.set_trace()
+                # import pdb
+                # pdb.set_trace()
                 for img_id in coco_imgs:
                     file_name = coco_imgs[img_id]['file_name']
                     if file_name == path.stem:
