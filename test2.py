@@ -278,6 +278,8 @@ def test(data,
         try:  # https://github.com/cocodataset/cocoapi/blob/master/PythonAPI/pycocoEvalDemo.ipynb
             
             pred = anno.loadRes(pred_json)  # init predictions api
+            import pdb
+            pdb.set_trace()
             eval = COCOeval(anno, pred, 'bbox')
             # if is_coco:
             #     eval.params.imgIds = [int(Path(x).stem) for x in dataloader.dataset.img_files]  # image IDs to evaluate
