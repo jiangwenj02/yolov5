@@ -99,6 +99,12 @@ def test(data,
     p, r, f1, mp, mr, map50, map, t0, t1 = 0., 0., 0., 0., 0., 0., 0., 0., 0.
     loss = torch.zeros(3, device=device)
     jdict, stats, ap, ap_class, wandb_images = [], [], [], [], []
+    anno_json = '/data3/zzhang/annotation/erosiveulcer_fine/test.json'  # annotations json
+    from pycocotools.coco import COCO
+    from pycocotools.cocoeval import COCOeval
+
+    anno = COCO(anno_json)  # init annotations api
+    coco_imgs = anno.imgs
     for batch_i, (img, targets, paths, shapes) in enumerate(tqdm(dataloader, desc=s)):
         img = img.to(device, non_blocking=True)
         img = img.half() if half else img.float()  # uint8 to fp16/32
@@ -122,12 +128,7 @@ def test(data,
         out = non_max_suppression(out, conf_thres, iou_thres, labels=lb, multi_label=True, agnostic=single_cls)
         t1 += time_synchronized() - t
 
-        anno_json = '/data3/zzhang/annotation/erosiveulcer_fine/test.json'  # annotations json
-        from pycocotools.coco import COCO
-        from pycocotools.cocoeval import COCOeval
-
-        anno = COCO(anno_json)  # init annotations api
-        coco_imgs = anno.imgs
+        
 
         # Statistics per image
         for si, pred in enumerate(out):
