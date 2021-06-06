@@ -127,6 +127,7 @@ def test(data,
         from pycocotools.cocoeval import COCOeval
 
         anno = COCO(anno_json)  # init annotations api
+        coco_imgs = anno.imgs
 
         # Statistics per image
         for si, pred in enumerate(out):
@@ -173,7 +174,13 @@ def test(data,
                 # [{"image_id": 42, "category_id": 18, "bbox": [258.15, 41.29, 348.26, 243.78], "score": 0.236}, ...
                 import pdb
                 pdb.set_trace()
-                image_id = int(path.stem) if path.stem.isnumeric() else path.stem
+                for img_id in coco_imgs:
+                    file_name = coco_imgs[img_id]['file_name']
+                    if file_name == path.stem:
+                        image_id = img_id
+                        break
+                    
+                #image_id = int(path.stem) if path.stem.isnumeric() else path.stem
                 box = xyxy2xywh(predn[:, :4])  # xywh
                 box[:, :2] -= box[:, 2:] / 2  # xy center to top-left corner
                 for p, b in zip(pred.tolist(), box.tolist()):
