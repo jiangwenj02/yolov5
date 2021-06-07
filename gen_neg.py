@@ -108,8 +108,8 @@ class Evaluator:
                     p, s, im0, frame, fps = path, '', im0s.copy(), getattr(dataset, 'frame', 0), dataset.fps
                     p = Path(p)  # to Path
                     frame_time = frame / float(fps)
-                    import pdb
-                    pdb.set_trace()
+                    # import pdb
+                    # pdb.set_trace()
                     save_path = osp.join(self.saving_root, p.stem)  # img.jpg
                     vid_save_path = osp.join(save_path, p.stem)
                     fp_save_dir = osp.join(save_path, 'fp')
