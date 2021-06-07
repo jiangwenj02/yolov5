@@ -105,6 +105,9 @@ class Evaluator:
                 for i, det in enumerate(pred):  # detections per image
                     p, s, im0, frame = path, '', im0s.copy(), getattr(dataset, 'frame', 0)
                     p = Path(p)  # to Path
+                    import pdb
+                    pdb.set_trace()
+                    
                     save_path = str(self.saving_root / p.name)  # img.jpg
                     txt_path = str(self.saving_root / 'labels' / p.stem) + ('' if dataset.mode == 'image' else f'_{frame}')  # img.txt
                     s += '%gx%g ' % img.shape[2:]  # print string
