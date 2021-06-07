@@ -82,6 +82,7 @@ class Evaluator:
             print('current work at: {}'.format(video))
             counter = 0
             video_path = os.path.join(self.video_root, video)
+            vid_path, vid_writer = None, None
             if not os.path.isfile(video_path):
                 print('{} not exist'.format(video_path))
                 continue
@@ -141,7 +142,6 @@ class Evaluator:
                     # Print time (inference + NMS)
                     print(f'{s}Done. ({t2 - t1:.3f}s)')
 
-                    # Save results (image with detections)
                     if vid_path != save_path:  # new video
                         vid_path = save_path
                         if isinstance(vid_writer, cv2.VideoWriter):
