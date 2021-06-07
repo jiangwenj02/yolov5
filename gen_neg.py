@@ -61,7 +61,7 @@ class Evaluator:
         # Load model
         model = attempt_load(self.opt.weights, map_location=device)  # load FP32 model
         stride = int(model.stride.max())  # model stride
-        imgsz = check_img_size(self.opt.imgsz, s=stride)  # check img_size
+        imgsz = check_img_size(self.opt.img_size, s=stride)  # check img_size
         self.names = model.module.names if hasattr(model, 'module') else model.names  # get class names
         self.half = half
         if half:
@@ -84,7 +84,7 @@ class Evaluator:
             if not os.path.isfile(video_path):
                 print('{} not exist'.format(video_path))
                 continue
-            dataset = LoadVideos(video_path, img_size=self.opt.imgsz, stride=self.opt.stride)
+            dataset = LoadVideos(video_path, img_size=self.opt.img_size, stride=self.opt.stride)
             for path, img, im0s, vid_cap in dataset:
                 img = torch.from_numpy(img).to(self.device)
                 img = img.half() if self.half else img.float()  # uint8 to fp16/32
