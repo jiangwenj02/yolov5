@@ -1,4 +1,5 @@
 import os
+import os.path as osp
 import imageio
 import pandas as pd
 import datetime
@@ -107,9 +108,9 @@ class Evaluator:
                     p = Path(p)  # to Path
                     import pdb
                     pdb.set_trace()
-                    
-                    save_path = str(self.saving_root / p.name)  # img.jpg
-                    txt_path = str(self.saving_root / 'labels' / p.stem) + ('' if dataset.mode == 'image' else f'_{frame}')  # img.txt
+
+                    save_path = osp.join(self.saving_root, p.stem)  # img.jpg
+                    txt_path = osp.join(self.saving_root, 'labels', p.stem + '_' + str(frame))# img.txt
                     s += '%gx%g ' % img.shape[2:]  # print string
                     gn = torch.tensor(im0.shape)[[1, 0, 1, 0]]  # normalization gain whwh
                     imc = im0.copy() if self.opt.save_crop else im0  # for opt.save_crop
