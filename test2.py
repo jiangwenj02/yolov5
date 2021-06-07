@@ -99,6 +99,12 @@ def test(data,
     p, r, f1, mp, mr, map50, map, t0, t1 = 0., 0., 0., 0., 0., 0., 0., 0., 0.
     loss = torch.zeros(3, device=device)
     jdict, stats, ap, ap_class, wandb_images = [], [], [], [], []
+    anno_json = '/data3/zzhang/annotation/erosiveulcer_fine/test.json'  # annotations json
+    from pycocotools.coco import COCO
+    from pycocotools.cocoeval import COCOeval
+
+    anno = COCO(anno_json)  # init annotations api
+    coco_imgs = anno.imgs
     for batch_i, (img, targets, paths, shapes) in enumerate(tqdm(dataloader, desc=s)):
         img = img.to(device, non_blocking=True)
         img = img.half() if half else img.float()  # uint8 to fp16/32
@@ -121,6 +127,8 @@ def test(data,
         t = time_synchronized()
         out = non_max_suppression(out, conf_thres, iou_thres, labels=lb, multi_label=True, agnostic=single_cls)
         t1 += time_synchronized() - t
+
+        
 
         # Statistics per image
         for si, pred in enumerate(out):
@@ -165,14 +173,20 @@ def test(data,
             # Append to pycocotools JSON dictionary
             if save_json:
                 # [{"image_id": 42, "category_id": 18, "bbox": [258.15, 41.29, 348.26, 243.78], "score": 0.236}, ...
-                import pdb
-                pdb.set_trace()
-                image_id = int(path.stem) if path.stem.isnumeric() else path.stem
+                # import pdb
+                # pdb.set_trace()
+                for img_id in coco_imgs:
+                    file_name = coco_imgs[img_id]['file_name']
+                    if file_name[:-4] == path.stem:
+                        image_id = img_id
+                        break
+
+                #image_id = int(path.stem) if path.stem.isnumeric() else path.stem
                 box = xyxy2xywh(predn[:, :4])  # xywh
-                box[:, :2] -= box[:, 2:] / 2  # xy center to top-left corner
+                # box[:, :2] -= box[:, 2:] / 2  # xy center to top-left corner
                 for p, b in zip(pred.tolist(), box.tolist()):
                     jdict.append({'image_id': image_id,
-                                  'category_id': coco91class[int(p[5])] if is_coco else int(p[5]),
+                                  'category_id': int(p[5]) + 1,
                                   'bbox': [round(x, 3) for x in b],
                                   'score': round(p[4], 5)})
 
@@ -255,21 +269,18 @@ def test(data,
     # Save JSON
     if save_json and len(jdict):
         w = Path(weights[0] if isinstance(weights, list) else weights).stem if weights is not None else ''  # weights
-        anno_json = '/data3/zzhang/annotation/erosiveulcer_fine/test.json'  # annotations json
+        
         pred_json = str(save_dir / f"{w}_predictions.json")  # predictions json
         print('\nEvaluating pycocotools mAP... saving %s...' % pred_json)
         with open(pred_json, 'w') as f:
             json.dump(jdict, f)
 
         try:  # https://github.com/cocodataset/cocoapi/blob/master/PythonAPI/pycocoEvalDemo.ipynb
-            from pycocotools.coco import COCO
-            from pycocotools.cocoeval import COCOeval
-
-            anno = COCO(anno_json)  # init annotations api
+            
             pred = anno.loadRes(pred_json)  # init predictions api
             eval = COCOeval(anno, pred, 'bbox')
-            if is_coco:
-                eval.params.imgIds = [int(Path(x).stem) for x in dataloader.dataset.img_files]  # image IDs to evaluate
+            # if is_coco:
+            #     eval.params.imgIds = [int(Path(x).stem) for x in dataloader.dataset.img_files]  # image IDs to evaluate
             eval.evaluate()
             eval.accumulate()
             eval.summarize()
