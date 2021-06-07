@@ -81,6 +81,8 @@ class Evaluator:
         for index,  temp in enumerate(csv_videos_susection):
             video, anno = temp['video_name'], temp['tp_range']
             print('current work at: {}'.format(video))
+            import pdb
+            pdb.set_trace()
             counter = 0
             video_path = os.path.join(self.video_root, video)
             vid_path, vid_writer = None, None
