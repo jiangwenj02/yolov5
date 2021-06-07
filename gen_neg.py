@@ -437,7 +437,7 @@ if __name__ == '__main__':
     parser.add_argument('--hide-labels', default=False, action='store_true', help='hide labels')
     parser.add_argument('--hide-conf', default=False, action='store_true', help='hide confidences')
     args = parser.parse_args()
-    evaluator = Evaluator()
+    evaluator = Evaluator(args)
     csv = CSV_helper_gastric()
     csv.open_csv('neg.csv')
 
