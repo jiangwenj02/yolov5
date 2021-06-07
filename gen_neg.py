@@ -326,6 +326,7 @@ if __name__ == '__main__':
         args.end = len(gt)
     start_video_index = args.start
     end_index = args.end
+    print(gt)
 
     # evaluator.test_video2(gt,start_video_index,end_index)
 
