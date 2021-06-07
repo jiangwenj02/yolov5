@@ -107,8 +107,6 @@ class Evaluator:
                 for i, det in enumerate(pred):  # detections per image
                     p, s, im0, frame = path, '', im0s.copy(), getattr(dataset, 'frame', 0)
                     p = Path(p)  # to Path
-                    import pdb
-                    pdb.set_trace()
 
                     save_path = osp.join(self.saving_root, p.stem)  # img.jpg
                     txt_path = osp.join(self.saving_root, 'labels', p.stem + '_' + str(frame))# img.txt
