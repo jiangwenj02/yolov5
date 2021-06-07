@@ -51,6 +51,7 @@ class Evaluator:
         self.opt = opt
         self.saving_root = "/data3/zzhang/tmp/erosive_ulcer_videos/"
         self.video_root = "/data1/qilei_chen/DATA/erosive_ulcer_videos/"
+        os.popen('rm -r ' + self.saving_root + '*')
 
     def _init_detector(self):
         # Initialize
