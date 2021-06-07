@@ -431,7 +431,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="video_evaluation")
     parser.add_argument('--start', default=0, type=int,  help="video index to start")
     parser.add_argument('--end', default=0, type=int, help="video index to end")
-    parser.add_argument('--weights', nargs='+', type=str, default='runs/train/exp2/weights/best.pt', help='model.pt path(s)')
+    parser.add_argument('--weights', nargs='+', type=str, default='/data2/xwang/yolov5_xizhe/runs/s_orig_version/weights/259.pt', help='model.pt path(s)')
     parser.add_argument('--source', type=str, default='data/images', help='source')  # file/folder, 0 for webcam
     parser.add_argument('--img-size', type=int, default=640, help='inference size (pixels)')
     parser.add_argument('--conf-thres', type=float, default=0.25, help='object confidence threshold')
