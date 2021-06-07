@@ -240,7 +240,7 @@ class CSV_helper_gastric(object):
         self.dataframe = pd.read_excel(path)
 
     def get_annos(self):
-
+        print(self.dataframe)
         self.video_names = self.dataframe['video_name']
         self.tp_annos = []
 
