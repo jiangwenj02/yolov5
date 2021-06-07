@@ -105,11 +105,12 @@ class Evaluator:
 
                 # Process detections
                 for i, det in enumerate(pred):  # detections per image
-                    p, s, im0, frame = path, '', im0s.copy(), getattr(dataset, 'frame', 0)
+                    p, s, im0, frame, fps = path, '', im0s.copy(), getattr(dataset, 'frame', 0), dataset.fps
                     p = Path(p)  # to Path
-
+                    frame_time = frame / float(fps)
                     save_path = osp.join(self.saving_root, p.stem)  # img.jpg
-                    txt_path = osp.join(self.saving_root, 'labels', p.stem + '_' + str(frame))# img.txt
+                    vid_save_path = osp.join(save_path, p.stem)
+                    # txt_path = osp.join(self.saving_root, 'labels', p.stem + '_' + str(frame))# img.txt
                     s += '%gx%g ' % img.shape[2:]  # print string
                     gn = torch.tensor(im0.shape)[[1, 0, 1, 0]]  # normalization gain whwh
                     imc = im0.copy() if self.opt.save_crop else im0  # for opt.save_crop
@@ -137,11 +138,17 @@ class Evaluator:
                             if self.opt.save_crop:
                                 save_one_box(xyxy, imc, file=self.saving_root / 'crops' / self.names[c] / f'{p.stem}.jpg', BGR=True)
 
+                        if not self.time_in_list_range(anno,frame_time)[0]:
+                            cv2.imwrite(os.path.join(save_path, 'fp', f"{video}_{frame}_Z.jpg"), imc)
+                    else:
+                        if not self.time_in_list_range(anno,frame_time)[0]:
+                            cv2.imwrite(os.path.join(save_path, 'fn',f"{video}_{frame}.jpg"), imc)
+
                     # Print time (inference + NMS)
                     print(f'{s}Done. ({t2 - t1:.3f}s)')
 
-                    if vid_path != save_path:  # new video
-                        vid_path = save_path
+                    if vid_path != vid_save_path:  # new video
+                        vid_path = vid_save_path
                         if isinstance(vid_writer, cv2.VideoWriter):
                             vid_writer.release()  # release previous video writer
                         if vid_cap:  # video
@@ -150,8 +157,8 @@ class Evaluator:
                             h = int(vid_cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
                         else:  # stream
                             fps, w, h = 30, im0.shape[1], im0.shape[0]
-                            save_path += '.mp4'
-                        vid_writer = cv2.VideoWriter(save_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
+                            vid_save_path += '.mp4'
+                        vid_writer = cv2.VideoWriter(vid_save_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
                     vid_writer.write(im0)
 
     # def test_video2(self, csv_gt_annos,start_video_index,end_index):
@@ -265,9 +272,9 @@ class Evaluator:
     #     print('current work with: {}'.format(file_name_with_extention))
     #     return frame_reader, save_result_dir
 
-    def _save_results(self, img, polyp_result, save_result_dir, counter):
-        self.polyp_detector.draw_rect(img, polyp_result)
-        imageio.imwrite(os.path.join(save_result_dir, str(counter) + '.jpg'), img)
+    # def _save_results(self, img, polyp_result, save_result_dir, counter):
+    #     self.polyp_detector.draw_rect(img, polyp_result)
+    #     imageio.imwrite(os.path.join(save_result_dir, str(counter) + '.jpg'), img)
 
     def time_in_list_range(self, range_list, x):
         for i, range in enumerate(range_list):
