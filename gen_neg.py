@@ -318,7 +318,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     # evaluator = Evaluator()
     csv = CSV_helper_gastric()
-    csv.open_csv('negative.csv')
+    csv.open_csv('neg.csv')
 
     gt = csv.get_annos()
     print('total video {}'.format(len(gt)))
