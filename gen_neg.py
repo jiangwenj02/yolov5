@@ -115,14 +115,14 @@ class Evaluator:
                     save_path = osp.join(self.saving_root, p.stem)  # img.jpg
                     vid_save_path = osp.join(save_path, p.stem)
                     fp_save_dir = osp.join(save_path, 'fp')
-                    fn_save_dir = osp.join(save_path, 'fn')
+                    fn_z_save_dir = osp.join(save_path, 'fP_z')
                     os.makedirs(save_path, exist_ok=True)
                     os.makedirs(fp_save_dir, exist_ok=True)
-                    os.makedirs(fn_save_dir, exist_ok=True)
+                    os.makedirs(fn_z_save_dir, exist_ok=True)
                     # txt_path = osp.join(self.saving_root, 'labels', p.stem + '_' + str(frame))# img.txt
                     s += '%gx%g ' % img.shape[2:]  # print string
                     gn = torch.tensor(im0.shape)[[1, 0, 1, 0]]  # normalization gain whwh
-                    imc = im0.copy() if self.opt.save_crop else im0  # for opt.save_crop
+                    imc = im0.copy()
                     if len(det):
                         # Rescale boxes from img_size to im0 size
                         det[:, :4] = scale_coords(img.shape[2:], det[:, :4], im0.shape).round()
@@ -144,14 +144,11 @@ class Evaluator:
                             c = int(cls)  # integer class
                             label = None if self.opt.hide_labels else (self.names[c] if self.opt.hide_conf else f'{self.names[c]} {conf:.2f}')
                             plot_one_box(xyxy, im0, label=label, color=colors(c, True), line_thickness=self.opt.line_thickness)
-                            if self.opt.save_crop:
-                                save_one_box(xyxy, imc, file=self.saving_root / 'crops' / self.names[c] / f'{p.stem}.jpg', BGR=True)
 
                         if not self.time_in_list_range(anno,frame_time)[0]:
-                            cv2.imwrite(os.path.join(save_path, 'fp', f"{video}_{frame}_Z.jpg"), imc)
-                    else:
-                        if not self.time_in_list_range(anno,frame_time)[0]:
-                            cv2.imwrite(os.path.join(save_path, 'fn',f"{video}_{frame}.jpg"), imc)
+                            cv2.imwrite(os.path.join(fp_save_dir, 'fp', f"{video}_{frame}.jpg"), imc)
+                            cv2.imwrite(os.path.join(fn_z_save_dir, f"{video}_{frame}_Z.jpg"), im0)
+                    
 
                     # Print time (inference + NMS)
                     print(f'{s}Done. ({t2 - t1:.3f}s)')
