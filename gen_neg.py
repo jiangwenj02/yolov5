@@ -115,10 +115,10 @@ class Evaluator:
                     save_path = osp.join(self.saving_root, p.stem)  # img.jpg
                     vid_save_path = osp.join(save_path, p.stem)
                     fp_save_dir = osp.join(save_path, 'fp')
-                    fn_z_save_dir = osp.join(save_path, 'fP_z')
+                    fp_z_save_dir = osp.join(save_path, 'fp_z')
                     os.makedirs(save_path, exist_ok=True)
                     os.makedirs(fp_save_dir, exist_ok=True)
-                    os.makedirs(fn_z_save_dir, exist_ok=True)
+                    os.makedirs(fp_z_save_dir, exist_ok=True)
                     # txt_path = osp.join(self.saving_root, 'labels', p.stem + '_' + str(frame))# img.txt
                     s += '%gx%g ' % img.shape[2:]  # print string
                     gn = torch.tensor(im0.shape)[[1, 0, 1, 0]]  # normalization gain whwh
@@ -146,8 +146,8 @@ class Evaluator:
                             plot_one_box(xyxy, im0, label=label, color=colors(c, True), line_thickness=self.opt.line_thickness)
 
                         if not self.time_in_list_range(anno,frame_time)[0]:
-                            cv2.imwrite(os.path.join(fp_save_dir, 'fp', f"{video}_{frame}.jpg"), imc)
-                            cv2.imwrite(os.path.join(fn_z_save_dir, f"{video}_{frame}_Z.jpg"), im0)
+                            cv2.imwrite(os.path.join(fp_save_dir, f"{video}_{frame}.jpg"), imc)
+                            cv2.imwrite(os.path.join(fp_z_save_dir, f"{video}_{frame}_Z.jpg"), im0)
                     
 
                     # Print time (inference + NMS)
