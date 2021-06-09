@@ -154,7 +154,7 @@ class Evaluator:
                     print(f'{s}Done. ({t2 - t1:.3f}s)')
 
                     if vid_path != vid_save_path:  # new video
-                        fps, w, h = 30, im0.shape[1], im0.shape[0]
+                        w, h = im0.shape[1], im0.shape[0]
                         vid_save_path += '.mp4'
                         vid_writer = cv2.VideoWriter(vid_save_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
                     vid_writer.write(im0)
