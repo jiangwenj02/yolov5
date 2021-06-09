@@ -50,7 +50,7 @@ class Evaluator:
     def __init__(self, opt):
 
         self.opt = opt
-        self.saving_root = "/data3/zzhang/tmp/erosive_ulcer_videos/"
+        self.saving_root = "/data3/zzhang/tmp/erosive_ulcer_videos2/"
         self.video_root = "/data1/qilei_chen/DATA/erosive_ulcer_videos/"
         os.popen('rm -r ' + self.saving_root + '*')
 
