@@ -20,6 +20,7 @@ from utils.plots import colors, plot_one_box
 from utils.torch_utils import select_device, load_classifier, time_synchronized
 import torch
 from pathlib import Path
+import mmcv
 
 rois = {
     'big': [441, 1, 1278, 720],  # july video
@@ -158,6 +159,7 @@ class Evaluator:
                         vid_path = vid_save_path
                         vid_save_path += '.mp4'                        
                         vid_writer = cv2.VideoWriter(vid_save_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
+                    im0 = mmcv.imresize(im0, size=(w,h))
                     vid_writer.write(im0)
 
     # def test_video2(self, csv_gt_annos,start_video_index,end_index):
