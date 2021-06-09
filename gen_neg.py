@@ -164,6 +164,8 @@ class Evaluator:
                         else:  # stream
                             fps, w, h = 30, im0.shape[1], im0.shape[0]
                             vid_save_path += '.mp4'
+                        import pdb
+                        pdb.set_trace()
                         vid_writer = cv2.VideoWriter(vid_save_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
                     vid_writer.write(im0)
 
