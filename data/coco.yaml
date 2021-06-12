@@ -15,10 +15,10 @@ val: /data3/zzhang/annotation/erosiveulcer_fine/test.txt  # 5000 images
 test: /data3/zzhang/annotation/erosiveulcer_fine/test.txt  # 20288 of 40670 images, submit to https://competitions.codalab.org/competitions/20794
 
 # number of classes
-nc: 2
+nc: 3
 
 # class names
-names: ['erosive', 'ulcer']
+names: ['erosive', 'ulcer', 'other']
 
 
 # [ 'person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train', 'truck', 'boat', 'traffic light',
