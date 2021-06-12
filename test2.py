@@ -99,7 +99,7 @@ def test(data,
     p, r, f1, mp, mr, map50, map, t0, t1 = 0., 0., 0., 0., 0., 0., 0., 0., 0.
     loss = torch.zeros(3, device=device)
     jdict, stats, ap, ap_class, wandb_images = [], [], [], [], []
-    anno_json = '/data3/zzhang/annotation/erosiveulcer_fine/test.json'  # annotations json
+    anno_json = '/data3/zzhang/annotation/erosiveulcer_fine/test2.json'  # annotations json
     from pycocotools.coco import COCO
     from pycocotools.cocoeval import COCOeval
 
