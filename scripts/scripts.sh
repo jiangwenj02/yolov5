@@ -1,0 +1,1 @@
+python test2.py --weights runs/train/exp4/weights/best.pt --save-json --data data/coco.yaml
