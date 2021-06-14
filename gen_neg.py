@@ -66,7 +66,7 @@ class Evaluator:
         self.stride = int(model.stride.max())  # model stride
         imgsz = check_img_size(self.opt.img_size, s=self.stride)  # check img_size
         self.names = model.module.names if hasattr(model, 'module') else model.names  # get class names
-        self.names = ['erosive', 'ulcer']
+        self.names = ['erosive', 'ulcer', 'other']
         self.half = half
         if half:
             model.half()  # to FP16
