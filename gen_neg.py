@@ -50,8 +50,8 @@ class Evaluator:
     def __init__(self, opt):
 
         self.opt = opt
-        self.saving_root = "/data3/zzhang/tmp/erosive_ulcer_videos_fp/"
-        self.video_root = "/data1/qilei_chen/DATA/erosive_ulcer_videos/"
+        self.saving_root = opt.save_path
+        self.video_root = opt.video_path
         os.popen('rm -r ' + self.saving_root + '*')
 
     def _init_detector(self):
@@ -422,6 +422,9 @@ def merge_detection_json(file_paths, new_file='merged.json'):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(description="video_evaluation")
+    parser.add_argument('--csv_file', type=str, default='neg.csv', help='source')  # file/folder, 0 for webcam
+    parser.add_argument('--video_path', type=str, default='/data2/qilei_chen/DATA/erosive_ulcer_videos', help='source')  # file/folder, 0 for webcam
+    parser.add_argument('--save_path', type=str, default='/data3/zzhang/tmp/erosive_ulcer_videos0615/', help='source')  # file/folder, 0 for webcam
     parser.add_argument('--start', default=0, type=int,  help="video index to start")
     parser.add_argument('--end', default=0, type=int, help="video index to end")
     parser.add_argument('--weights', nargs='+', type=str, default='runs/train/exp4/weights/best.pt', help='model.pt path(s)')
@@ -449,7 +452,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     evaluator = Evaluator(args)
     csv = CSV_helper_gastric()
-    csv.open_csv('neg.csv')
+    csv.open_csv(args.csv_file)
 
     gt = csv.get_annos()
     print('total video {}'.format(len(gt)))
