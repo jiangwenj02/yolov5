@@ -422,7 +422,7 @@ def merge_detection_json(file_paths, new_file='merged.json'):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(description="video_evaluation")
-    parser.add_argument('--csv_file', type=str, default='neg.csv', help='source')  # file/folder, 0 for webcam
+    parser.add_argument('--csv_file', type=str, default='neg0615.csv', help='source')  # file/folder, 0 for webcam
     parser.add_argument('--video_path', type=str, default='/data2/qilei_chen/DATA/erosive_ulcer_videos', help='source')  # file/folder, 0 for webcam
     parser.add_argument('--save_path', type=str, default='/data3/zzhang/tmp/erosive_ulcer_videos0615/', help='source')  # file/folder, 0 for webcam
     parser.add_argument('--start', default=0, type=int,  help="video index to start")
