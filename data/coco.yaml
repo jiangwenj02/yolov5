@@ -19,10 +19,11 @@ val: data/erosiveulcer/test.txt  # 5000 images
 test: data/erosiveulcer/test.txt  # 20288 of 40670 images, submit to https://competitions.codalab.org/competitions/20794
 
 # number of classes
-nc: 3
+nc: 2
 
 # class names
-names: ['erosive', 'ulcer', 'other']
+# names: ['erosive', 'ulcer', 'other']
+names: ['erosive', 'ulcer']
 
 
 # [ 'person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train', 'truck', 'boat', 'traffic light',
