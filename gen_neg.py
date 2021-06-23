@@ -75,15 +75,15 @@ class Evaluator:
             model(torch.zeros(1, 3, imgsz, imgsz).to(device).type_as(next(model.parameters())))  # run once
         self.model = model
 
-    def test_video(self,  csv_gt_annos,start_video_index,end_index):
+    def test_video(self,  csv_gt_annos, start_video_index, end_index):
         self._init_detector()
         print('I am work at video form index {} to index {} '.format(start_video_index, end_index-1))
-        csv_videos_susection =  csv_gt_annos[start_video_index:end_index]
-        dechun_result = dict()
+        csv_videos_susection = csv_gt_annos[start_video_index:end_index]
+
         for index,  temp in enumerate(csv_videos_susection):
             video, anno = temp['video_name'], temp['tp_range']
             print('current work at: {}'.format(video))
-            counter = 0
+
             video_path = os.path.join(self.video_root, video)
             vid_path, vid_writer = None, None
             if not os.path.isfile(video_path):
