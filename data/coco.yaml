@@ -16,7 +16,7 @@
 
 train: data/erosiveulcer/train.txt  # 118287 images
 val: data/erosiveulcer/test.txt  # 5000 images
-test: data/erosiveulcer/test.txt  # 20288 of 40670 images, submit to https://competitions.codalab.org/competitions/20794
+test: data/erosiveulcer/fp.txt  # 20288 of 40670 images, submit to https://competitions.codalab.org/competitions/20794
 
 # number of classes
 nc: 2
