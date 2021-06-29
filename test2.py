@@ -177,7 +177,8 @@ def test(data,
                 # pdb.set_trace()
                 for img_id in coco_imgs:
                     file_name = coco_imgs[img_id]['file_name']
-                    print(file_name, path.stem)
+                    import pdb
+                    pdb.set_trace()
                     if file_name[:-4] == path.stem:
                         image_id = img_id
                         break
