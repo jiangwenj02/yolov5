@@ -15,7 +15,7 @@
 # test: /data3/zzhang/annotation/erosiveulcer_fine/test.txt  # 20288 of 40670 images, submit to https://competitions.codalab.org/competitions/20794
 
 train: data/erosiveulcer/train.txt  # 118287 images
-val: data/erosiveulcer/test.txt  # 5000 images
+val: data/erosiveulcer/fp.txt  # 5000 images
 test: data/erosiveulcer/fp.txt  # 20288 of 40670 images, submit to https://competitions.codalab.org/competitions/20794
 
 # number of classes
