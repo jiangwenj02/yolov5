@@ -14,16 +14,16 @@
 # val: /data3/zzhang/annotation/erosiveulcer_fine/test.txt  # 5000 images
 # test: /data3/zzhang/annotation/erosiveulcer_fine/test.txt  # 20288 of 40670 images, submit to https://competitions.codalab.org/competitions/20794
 
-train: data/erosiveulcer/trainfp.txt  # 118287 images
-val: data/erosiveulcer/fp.txt  # 5000 images
-test: data/erosiveulcer/fp.txt  # 20288 of 40670 images, submit to https://competitions.codalab.org/competitions/20794
+train: data/erosiveulcer/trainfp0704.txt  # 118287 images
+val: data/erosiveulcer/test.txt  # 5000 images
+test: data/erosiveulcer/test.txt  # 20288 of 40670 images, submit to https://competitions.codalab.org/competitions/20794
 
 # number of classes
-nc: 2
+nc: 3
 
 # class names
-# names: ['erosive', 'ulcer', 'other']
-names: ['erosive', 'ulcer']
+names: ['erosive', 'ulcer', 'other']
+# names: ['erosive', 'ulcer']
 
 
 # [ 'person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train', 'truck', 'boat', 'traffic light',
