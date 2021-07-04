@@ -79,9 +79,12 @@ class Evaluator:
         self._init_detector()
         print('I am work at video form index {} to index {} '.format(start_video_index, end_index-1))
         csv_videos_susection = csv_gt_annos[start_video_index:end_index]
+        summary_f = open(self.det_summary, 'w')
 
         for index,  temp in enumerate(csv_videos_susection):
-            video, anno = temp['video_name'], temp['tp_range']
+            video, anno, break_time = temp['video_name'], temp['tp_range'], temp['break_time']
+            object_count = [[0] * len(self.names)] * (len(temp['break_time']) + 1)
+            object_count = np.array(object_count)
             print('current work at: {}'.format(video))
 
             video_path = os.path.join(self.video_root, video)
@@ -146,10 +149,12 @@ class Evaluator:
                             label = None if self.opt.hide_labels else (self.names[c] if self.opt.hide_conf else f'{self.names[c]} {conf:.2f}')
                             plot_one_box(xyxy, im0, label=label, color=colors(c, True), line_thickness=self.opt.line_thickness)
 
+                            time_idx = self.time_in_break_time(break_time, frame_time)
+                            object_count[time_idx][c] += 1
+
                         if not self.time_in_list_range(anno,frame_time)[0]:
                             cv2.imwrite(os.path.join(fp_save_dir, f"{video}_{frame}.jpg"), imc)
                             cv2.imwrite(os.path.join(fp_z_save_dir, f"{video}_{frame}_Z.jpg"), im0)
-                    
 
                     # Print time (inference + NMS)
                     print(f'{s}Done. ({t2 - t1:.3f}s)')
@@ -161,6 +166,12 @@ class Evaluator:
                         vid_writer = cv2.VideoWriter(vid_save_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
                     im0 = mmcv.imresize(im0, size=(w,h))
                     vid_writer.write(im0)
+
+            summary_f.write(video + '\n')
+            summary_f.write(' '.join(break_time) + '\n')
+            for i in range(len(self.names)):
+                summary_f.write(self.names[i] + ' '.join(object_count[:, i]) + '\n')
+            summary_f.close()
 
     # def test_video2(self, csv_gt_annos,start_video_index,end_index):
     #     self._init_detector()
@@ -284,6 +295,12 @@ class Evaluator:
 
         return False, 0
 
+    def time_in_break_time(self, break_time, x):
+        for i, range in enumerate(break_time):
+            if x >= range:
+                return i - 1
+        return i
+
     def time_in_range(self, start, end, x):
         """Return true if x is in the range [start, end]"""
         if start <= end:
@@ -348,6 +365,7 @@ class CSV_helper_gastric(object):
         assert os.path.isfile(path), 'file not exist: {}'.format(path)
         self.dataframe = pd.read_excel(path)
 
+
     def get_annos(self):
         print(self.dataframe)
         self.video_names = self.dataframe['video_name']
@@ -356,7 +374,8 @@ class CSV_helper_gastric(object):
         for index, name in enumerate(self.video_names):
             tp = {
                 'video_name':name,
-                'tp_range':[]
+                'tp_range':[],
+                'time_break':[]
             }
             if not pd.isna(name):
 
@@ -385,6 +404,7 @@ class CSV_helper_gastric(object):
                         start_second = (start.hour * 60 + start.minute) * 60 + start.second
                         end_second = (end.hour * 60 + end.minute) * 60 + end.second
                         tp['tp_range'].append([start_second, end_second])
+                        tp['time_break'].extend([start_second, end_second])
 
                     i += 2
                 self.tp_annos.append(tp)
