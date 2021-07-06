@@ -52,6 +52,7 @@ class Evaluator:
         self.opt = opt
         self.saving_root = opt.save_path
         self.video_root = opt.video_path
+        self.det_summary = osp.join(self.saving_root, 'summary.txt')
         os.popen('rm -r ' + self.saving_root + '*')
 
     def _init_detector(self):
@@ -445,6 +446,7 @@ if __name__ == '__main__':
     parser.add_argument('--csv_file', type=str, default='neg0615.csv', help='source')  # file/folder, 0 for webcam
     parser.add_argument('--video_path', type=str, default='/data2/qilei_chen/DATA/erosive_ulcer_videos', help='source')  # file/folder, 0 for webcam
     parser.add_argument('--save_path', type=str, default='/data3/zzhang/tmp/erosive_ulcer_videos0615/', help='source')  # file/folder, 0 for webcam
+    # parser.add_argument('--det_summary', type=str, default='/data3/zzhang/tmp/erosive_ulcer_videos0615/summary.txt', help='source')  # file/folder, 0 for webcam
     parser.add_argument('--start', default=0, type=int,  help="video index to start")
     parser.add_argument('--end', default=0, type=int, help="video index to end")
     parser.add_argument('--weights', nargs='+', type=str, default='runs/train/exp4/weights/best.pt', help='model.pt path(s)')
