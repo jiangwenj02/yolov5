@@ -151,7 +151,8 @@ class Evaluator:
                             c = int(cls)  # integer class
                             label = None if self.opt.hide_labels else (self.names[c] if self.opt.hide_conf else f'{self.names[c]} {conf:.2f}')
                             plot_one_box(xyxy, im0, label=label, color=colors(c, True), line_thickness=self.opt.line_thickness)
-
+                            print(frame_time, break_time, frame, fps)
+                            exit()
                             time_idx = self.time_in_break_time(break_time, frame_time)
                             object_count[time_idx][c] += 1
 
