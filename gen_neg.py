@@ -95,6 +95,7 @@ class Evaluator:
                 print('{} not exist'.format(video_path))
                 continue
             dataset = LoadVideos(video_path, img_size=self.opt.img_size, stride=self.stride)
+            count = 0 
             for path, img, im0s, vid_cap in dataset:
                 img = torch.from_numpy(img).to(self.device)
                 img = img.half() if self.half else img.float()  # uint8 to fp16/32
@@ -169,9 +170,9 @@ class Evaluator:
                         vid_writer = cv2.VideoWriter(vid_save_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
                     im0 = mmcv.imresize(im0, size=(w,h))
                     vid_writer.write(im0)
-
-                    if i > 50:
-                        break
+                count = count + 1
+                if count > 50:
+                    break
 
             summary_f.write(video + '\n')
             summary_f.write(' '.join(break_time_name) + '\n')
