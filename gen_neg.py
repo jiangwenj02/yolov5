@@ -170,9 +170,9 @@ class Evaluator:
                         vid_writer = cv2.VideoWriter(vid_save_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
                     im0 = mmcv.imresize(im0, size=(w,h))
                     vid_writer.write(im0)
-                count = count + 1
-                if count > 50:
-                    break
+                # count = count + 1
+                # if count > 50:
+                #     break
 
             summary_f.write(video + '\n')
             summary_f.write('time ' + ' '.join(break_time_name) + '\n')
