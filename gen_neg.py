@@ -272,7 +272,7 @@ class CSV_helper_gastric(object):
             }
             if not pd.isna(name):
 
-                row = self.dataframe.iloc[index][3:]
+                row = self.dataframe.iloc[index][2:]
 
                 i = 0
                 while i < len(row):
@@ -300,7 +300,7 @@ class CSV_helper_gastric(object):
                         tp['time_break'].extend([start_second, end_second])
                         tp['time_break_name'].extend([row_cell[0], row_cell[1]])
 
-                    i += 2
+                    i += 1
                 self.tp_annos.append(tp)
         return self.tp_annos
 
