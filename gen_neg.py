@@ -177,7 +177,7 @@ class Evaluator:
             summary_f.write(video + '\n')
             summary_f.write(' '.join(break_time_name) + '\n')
             for i in range(len(self.names)):
-                summary_f.write(self.names[i] + ' '.join(object_count[:, i]) + '\n')
+                summary_f.write(self.names[i] + ' '.join(object_count[:, i].tolist()) + '\n')
             summary_f.close()
 
     def time_in_list_range(self, range_list, x):
