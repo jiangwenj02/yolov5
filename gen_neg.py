@@ -54,6 +54,7 @@ class Evaluator:
         self.video_root = opt.video_path
         self.det_summary = osp.join(self.saving_root, 'summary.txt')
         os.popen('rm -r ' + self.saving_root + '*')
+        os.makedirs(self.saving_root, exist_ok=True)
 
     def _init_detector(self):
         # Initialize
