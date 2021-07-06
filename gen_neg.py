@@ -84,8 +84,8 @@ class Evaluator:
         summary_f = open(self.det_summary, 'w')
 
         for index,  temp in enumerate(csv_videos_susection):
-            video, anno, break_time = temp['video_name'], temp['tp_range'], temp['break_time']
-            object_count = [[0] * len(self.names)] * (len(temp['break_time']) + 1)
+            video, anno, break_time = temp['video_name'], temp['tp_range'], temp['time_break']
+            object_count = [[0] * len(self.names)] * (len(temp['time_break']) + 1)
             object_count = np.array(object_count)
             print('current work at: {}'.format(video))
 
@@ -174,121 +174,6 @@ class Evaluator:
             for i in range(len(self.names)):
                 summary_f.write(self.names[i] + ' '.join(object_count[:, i]) + '\n')
             summary_f.close()
-
-    # def test_video2(self, csv_gt_annos,start_video_index,end_index):
-    #     self._init_detector()
-    #     print('I am work at video form index {} to index {} '.format(start_video_index, end_index-1))
-    #     csv_videos_susection =  csv_gt_annos[start_video_index:end_index]
-    #     dechun_result = dict()
-    #     for index,  temp in enumerate(csv_videos_susection):
-    #         video, anno = temp['video_name'], temp['tp_range']
-    #         print('current work at: {}'.format(video))
-    #         counter = 0
-    #         video_path = os.path.join(self.video_root, video)
-    #         if not os.path.isfile(video_path):
-    #             print('{} not exist'.format(video_path))
-    #             continue
-    #         frame_reader, save_result_dir = self._get_frame_reader(video_path,
-    #                                                                "evaluation_video")
-    #         img = frame_reader.cap_video()
-    #         total_frame = frame_reader.get_total_frame_count()
-    #         fps = frame_reader.get_fps()
-    #         video_writer = cv2.VideoWriter(os.path.join(self.saving_root,video),
-    #                                cv2.VideoWriter_fourcc(*'mp4v'),
-    #                                frame_reader.get_fps(),
-    #                                (img.shape[1], img.shape[0]), True)
-
-    #         img_fp_folder = os.path.join(self.saving_root, video.split('.av')[0])
-    #         os.makedirs(img_fp_folder, exist_ok=True)
-    #         dechun_video_result = {
-    #             'total_frame': total_frame,
-    #             'fps': fps,
-    #             'size': img.shape[:2],
-    #             'detection_result': []
-    #         }
-
-    #         pbar = tqdm(total=total_frame)
-    #         pbar.update(1)
-
-    #         while img is not None:
-    #             out_img = img[:,:,(2,1,0)].copy()
-
-    #             all_detector_result = self.polyp_detector.get_results(img)
-    #             frame_time = counter / float(fps)
-
-    #             #dechun
-    #             if len(all_detector_result[0])>0:
-    #                 result = {}
-    #                 result['bbox'] = [a.tolist() for a in all_detector_result[0]]
-    #                 result['time'] = frame_time
-    #                 result['frame_counter'] = counter
-    #                 dechun_video_result['detection_result'].append(result)
-
-    #                 for box in all_detector_result[0]:
-    #                     if box[4] >= 0.5:
-    #                         pt1 = (int(box[0]), int(box[1]))
-    #                         pt2 = (int(box[2]), int(box[3]))
-    #                         text_pt = (int(box[0]), int(box[1] - 10))
-    #                         label = int(box[5])-1
-    #                         cv2.rectangle(out_img, pt1, pt2,  COLOR[label], 2)
-    #                         cv2.putText(out_img, f'{LABEL[label]}_{box[4]:.4f}', text_pt, cv2.FONT_HERSHEY_SIMPLEX, 1, COLOR[label], 2)
-    #                 if not time_in_list_range(anno,frame_time)[0]:
-    #                     cv2.imwrite(os.path.join(img_fp_folder,f"{video}_{counter}_dw.jpg"),out_img)
-    #                     cv2.imwrite(os.path.join(img_fp_folder, f"{video}_{counter}.jpg"), img[:,:,(2,1,0)])
-
-    #             video_writer.write(out_img)
-    #             pbar.update(1)
-    #             img = frame_reader.cap_video()
-    #             counter += 1
-
-    #         dechun_result[video] = dechun_video_result
-    #         pbar.close()
-    #         print(' Done {}/{}'.format(index + 1, len(csv_videos_susection)))
-    #         out= {
-    #             'dechun_result': dechun_result,
-
-    #         }
-    #         saving_path = os.path.join(self.saving_root, 'all_result_{}_{}.json'.format(start_video_index,end_index))
-    #         with open(saving_path, 'w') as f:
-    #             json.dump(out, f, indent=4)
-    #         print('result file save at: {}'.format(saving_path))
-
-
-
-
-    # def _get_frame_reader(self, video_dir, mode):
-    #     abs_path = video_dir  # directory of each video
-    #     assert os.path.isfile(abs_path), print('file does not exist: {}'.format(abs_path))
-
-    #     file_name_with_extention = os.path.basename(abs_path)
-    #     file_name = file_name_with_extention.split('.')[0]
-    #     self.file_name = file_name
-    #     save_result_dir = os.path.join(self.saving_root, mode, file_name)
-    #     print('save anno at dir: {}'.format(save_result_dir))
-    #     os.makedirs(save_result_dir, exist_ok=True)
-
-    #     if len(file_name) >= 10:
-    #         roi = rois['small']
-    #     else:
-    #         roi = rois['big']
-
-    #     if file_name in rois:
-    #         roi = rois[file_name]
-
-    #     frame_reader = FrameLoader(roi=[
-    #                           218,
-    #                           47,
-    #                           693,
-    #                           534
-    #                          ])
-    #     frame_reader.open_video(abs_path)
-
-    #     print('current work with: {}'.format(file_name_with_extention))
-    #     return frame_reader, save_result_dir
-
-    # def _save_results(self, img, polyp_result, save_result_dir, counter):
-    #     self.polyp_detector.draw_rect(img, polyp_result)
-    #     imageio.imwrite(os.path.join(save_result_dir, str(counter) + '.jpg'), img)
 
     def time_in_list_range(self, range_list, x):
         for i, range in enumerate(range_list):
