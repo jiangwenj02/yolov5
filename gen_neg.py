@@ -154,6 +154,7 @@ class Evaluator:
                             time_idx = self.time_in_break_time(break_time, frame_time)
                             object_count[time_idx][c] += 1
                             print(frame_time, break_time, frame, fps, time_idx)
+                            exit()
 
                         if not self.time_in_list_range(anno,frame_time)[0]:
                             cv2.imwrite(os.path.join(fp_save_dir, f"{video}_{frame}.jpg"), imc)
@@ -190,6 +191,7 @@ class Evaluator:
     def time_in_break_time(self, break_time, x):
         for i, range in enumerate(break_time):
             if x >= range:
+                print(x, range)
                 return i - 1
         return i
 
