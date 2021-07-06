@@ -175,7 +175,7 @@ class Evaluator:
                     break
 
             summary_f.write(video + '\n')
-            summary_f.write(' '.join(break_time_name) + '\n')
+            summary_f.write('time ' + ' '.join(break_time_name) + '\n')
             for i in range(len(self.names)):
                 summary_f.write(self.names[i] + ' '.join([str(item) for item in object_count[:, i].tolist()]) + '\n')
         summary_f.close()
