@@ -84,7 +84,7 @@ class Evaluator:
         summary_f = open(self.det_summary, 'w')
 
         for index,  temp in enumerate(csv_videos_susection):
-            video, anno, break_time = temp['video_name'], temp['tp_range'], temp['time_break']
+            video, anno, break_time, break_time_name = temp['video_name'], temp['tp_range'], temp['time_break'], temp['time_break_name']
             object_count = [[0] * len(self.names)] * (len(temp['time_break']) + 1)
             object_count = np.array(object_count)
             print('current work at: {}'.format(video))
@@ -157,6 +157,7 @@ class Evaluator:
                         if not self.time_in_list_range(anno,frame_time)[0]:
                             cv2.imwrite(os.path.join(fp_save_dir, f"{video}_{frame}.jpg"), imc)
                             cv2.imwrite(os.path.join(fp_z_save_dir, f"{video}_{frame}_Z.jpg"), im0)
+                    
 
                     # Print time (inference + NMS)
                     print(f'{s}Done. ({t2 - t1:.3f}s)')
@@ -169,8 +170,11 @@ class Evaluator:
                     im0 = mmcv.imresize(im0, size=(w,h))
                     vid_writer.write(im0)
 
+                    if i > 50:
+                        break
+
             summary_f.write(video + '\n')
-            summary_f.write(' '.join(break_time) + '\n')
+            summary_f.write(' '.join(break_time_name) + '\n')
             for i in range(len(self.names)):
                 summary_f.write(self.names[i] + ' '.join(object_count[:, i]) + '\n')
             summary_f.close()
@@ -262,7 +266,8 @@ class CSV_helper_gastric(object):
             tp = {
                 'video_name':name,
                 'tp_range':[],
-                'time_break':[]
+                'time_break':[],
+                'time_break_name':[]
             }
             if not pd.isna(name):
 
@@ -292,6 +297,7 @@ class CSV_helper_gastric(object):
                         end_second = (end.hour * 60 + end.minute) * 60 + end.second
                         tp['tp_range'].append([start_second, end_second])
                         tp['time_break'].extend([start_second, end_second])
+                        tp['time_break_name'].extend([row_cell[0], row_cell[1]])
 
                     i += 2
                 self.tp_annos.append(tp)
