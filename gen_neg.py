@@ -190,9 +190,9 @@ class Evaluator:
 
     def time_in_break_time(self, break_time, x):
         for i, range in enumerate(break_time):
-            if x <= range:                
+            if x <= range:
                 return i
-        return len(break_time) + 1
+        return len(break_time)
 
     def time_in_range(self, start, end, x):
         """Return true if x is in the range [start, end]"""
