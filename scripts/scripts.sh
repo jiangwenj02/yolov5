@@ -1,2 +1,2 @@
 python test2.py --weights runs/train/exp4/weights/best.pt --save-json --data data/coco.yaml
-python gen_neg.py --csv_file /data3/zzhang/annotation/erosiveulcer_fine/neg0615.csv --video_path /data3/zzhang/tmp/videos/ --save_path /data3/zzhang/tmp/erosive_ulcer_videos0706/
+python gen_neg.py --csv_file /data3/zzhang/annotation/erosiveulcer_fine/neg0615.csv --video_path /data3/zzhang/tmp/videos/ --save_path /data3/zzhang/tmp/erosive_ulcer_videos0707/
