@@ -10,7 +10,7 @@
 # download: bash data/scripts/get_coco.sh
 
 # train and val data as 1) directory: path/images/, 2) file: path/images.txt, or 3) list: [path1/images/, path2/images/]
-train: /data3/zzhang/annotation/erosiveulcer_fine/train0704.txt  # 118287 images
+train: /data3/zzhang/annotation/erosiveulcer_fine/train.txt  # 118287 images
 val: /data3/zzhang/annotation/erosiveulcer_fine/test.txt  # 5000 images
 test: /data3/zzhang/annotation/erosiveulcer_fine/test.txt  # 20288 of 40670 images, submit to https://competitions.codalab.org/competitions/20794
 
@@ -19,11 +19,11 @@ test: /data3/zzhang/annotation/erosiveulcer_fine/test.txt  # 20288 of 40670 imag
 # test: data/erosiveulcer/test.txt  # 20288 of 40670 images, submit to https://competitions.codalab.org/competitions/20794
 
 # number of classes
-nc: 3
+nc: 2
 
 # class names
-names: ['erosive', 'ulcer', 'other']
-# names: ['erosive', 'ulcer']
+# names: ['erosive', 'ulcer', 'other']
+names: ['erosive', 'ulcer']
 
 
 # [ 'person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train', 'truck', 'boat', 'traffic light',
