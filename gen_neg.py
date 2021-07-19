@@ -87,6 +87,9 @@ class Evaluator:
             video, anno, break_time, break_time_name = temp['video_name'], temp['tp_range'], temp['time_break'], temp['time_break_name']
             object_count = [[0] * len(self.names)] * (len(temp['time_break']) + 1)
             object_count = np.array(object_count)
+            all_fps_count = [0] * (len(temp['time_break']) + 1)
+            det_fps_count = [0] * (len(temp['time_break']) + 1)
+            start_fps_count = [0] * (len(temp['time_break']) + 1)
             print('current work at: {}'.format(video))
 
             video_path = os.path.join(self.video_root, video)
@@ -130,15 +133,20 @@ class Evaluator:
                     s += '%gx%g ' % img.shape[2:]  # print string
                     gn = torch.tensor(im0.shape)[[1, 0, 1, 0]]  # normalization gain whwh
                     imc = im0.copy()
+                    time_idx = self.time_in_break_time(break_time, frame_time)
+                    all_fps_count[time_idx]  += 1
                     if len(det):
                         # Rescale boxes from img_size to im0 size
                         det[:, :4] = scale_coords(img.shape[2:], det[:, :4], im0.shape).round()
+                        det_fps_count[time_idx] += 1
+                        if det_fps_count[time_idx] == 1:        
+                                start_fps_count[time_idx] = all_fps_count[time_idx]
 
                         # Print results
                         for c in det[:, -1].unique():
                             n = (det[:, -1] == c).sum()  # detections per class
                             s += f"{n} {self.names[int(c)]}{'s' * (n > 1)}, "  # add to string
-
+                        
                         # Write results
                         for *xyxy, conf, cls in reversed(det):
                             # if save_txt:  # Write to file
@@ -151,7 +159,7 @@ class Evaluator:
                             c = int(cls)  # integer class
                             label = None if self.opt.hide_labels else (self.names[c] if self.opt.hide_conf else f'{self.names[c]} {conf:.2f}')
                             plot_one_box(xyxy, im0, label=label, color=colors(c, True), line_thickness=self.opt.line_thickness)
-                            time_idx = self.time_in_break_time(break_time, frame_time)
+                            
                             object_count[time_idx][c] += 1
                             # print(frame_time, break_time, frame, fps, time_idx)
                             # exit()
@@ -160,7 +168,7 @@ class Evaluator:
                             cv2.imwrite(os.path.join(fp_save_dir, f"{video}_{frame}.jpg"), imc)
                             cv2.imwrite(os.path.join(fp_z_save_dir, f"{video}_{frame}_Z.jpg"), im0)
                     
-
+                    
                     # Print time (inference + NMS)
                     print(f'{s}Done. ({t2 - t1:.3f}s)')
 
@@ -174,9 +182,12 @@ class Evaluator:
                 count = count + 1
                 # if count > 50:
                 #     break
-
+            det_fps_count = [round((100 * det_fps_count[i] / all_fps_count[i]), 2) for i in range(len(all_fps_count))]
             summary_f.write(video + '\n')
             summary_f.write('time ' + ' '.join(break_time_name) + '\n')
+            summary_f.write('all_fps ' + ' '.join([str(item) for item in all_fps_count]) + '\n')
+            summary_f.write('start ' + ' '.join([str(item) for item in start_fps_count]) + '\n')
+            summary_f.write('det_Pro ' + ' '.join([str(item) for item in det_fps_count]) + '\n')
             for i in range(len(self.names)):
                 summary_f.write(self.names[i] + ' ' + ' '.join([str(item) for item in object_count[:, i].tolist()]) + '\n')
         summary_f.close()
