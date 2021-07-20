@@ -186,7 +186,7 @@ class Evaluator:
             end_time = time.time()
             spend_time = (end_time - start_time) * 1000
             det_speed = frame / spend_time
-            det_fps_count = [round((100 * det_fps_count[i] / all_fps_count[i]), 2) for i in range(len(all_fps_count))]
+            det_fps_count = [round((100 * det_fps_count[i] / (all_fps_count[i]+0.1)), 2) for i in range(len(all_fps_count))]
             summary_f.write(video + '\n')
             summary_f.write('fps: %.2f' % (det_speed) + '\n')
             summary_f.write('time ' + ' '.join(break_time_name) + '\n')
