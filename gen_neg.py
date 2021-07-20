@@ -21,7 +21,7 @@ from utils.torch_utils import select_device, load_classifier, time_synchronized
 import torch
 from pathlib import Path
 import mmcv
-
+import time
 rois = {
     'big': [441, 1, 1278, 720],  # july video
     'small': [156, 40, 698, 527],
@@ -99,6 +99,7 @@ class Evaluator:
                 continue
             dataset = LoadVideos(video_path, img_size=self.opt.img_size, stride=self.stride)
             count = 0 
+            start_time = time.time()
             for path, img, im0s, vid_cap in dataset:
                 img = torch.from_numpy(img).to(self.device)
                 img = img.half() if self.half else img.float()  # uint8 to fp16/32
@@ -180,10 +181,14 @@ class Evaluator:
                     im0 = mmcv.imresize(im0, size=(w,h))
                     vid_writer.write(im0)
                 count = count + 1
-                # if count > 50:
-                #     break
+                if count > 50:
+                    break
+            end_time = time.time()
+            spend_time = (end_time - start_time) * 1000
+            det_speed = frame / spend_time
             det_fps_count = [round((100 * det_fps_count[i] / all_fps_count[i]), 2) for i in range(len(all_fps_count))]
             summary_f.write(video + '\n')
+            summary_f.write('fps: %.2f' % (det_speed) + '\n')
             summary_f.write('time ' + ' '.join(break_time_name) + '\n')
             summary_f.write('all_fps ' + ' '.join([str(item) for item in all_fps_count]) + '\n')
             summary_f.write('start ' + ' '.join([str(item) for item in start_fps_count]) + '\n')
