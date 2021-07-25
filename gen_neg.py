@@ -298,9 +298,9 @@ class CSV_helper_gastric(object):
                         row_cell =  row[i].split('-')
                         if not  (isinstance(row_cell[0], datetime.time) and isinstance(row_cell[1], datetime.time)):
                             try:
-
+                                print(row_cell)
                                 start = datetime.datetime.strptime(row_cell[0], '%M:%S').time()
-                                end = datetime.datetime.strptime(row_cell[ 1], '%M:%S').time()
+                                end = datetime.datetime.strptime(row_cell[1], '%M:%S').time()
 
                             except:
 
