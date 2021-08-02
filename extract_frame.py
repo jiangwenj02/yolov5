@@ -82,7 +82,7 @@ class Evaluator:
             if ret:
                 if currentframe % self.interval == 0:
                     # if video is still left continue creating images
-                    td = timedelta(seconds=(frame / fps))
+                    td = timedelta(seconds=(currentframe / fps))
                     name = osp.join(self.saving_root, str(td) + '.jpg')
                     frame = crop_img(frame)
                     # writing the extracted images
