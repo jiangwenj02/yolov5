@@ -92,7 +92,7 @@ class Evaluator:
             
                     # increasing counter so that it will
                     # show how many frames are created
-                    currentframe += 1
+                currentframe += 1
             else:
                 break
   
