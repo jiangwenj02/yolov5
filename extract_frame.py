@@ -56,7 +56,9 @@ class Evaluator:
         self.saving_root = opt.save_path
         self.video_root = opt.video_path
         self.interval = opt.interval
-        os.popen('rm -r ' + self.saving_root + '*')
+        self.saving_root = osp.join(self.saving_root, osp.basename(self.video_root))
+        os.makedirs(self.saving_root, exist_ok=True)
+        os.popen('rm -r ' + osp.join(self.saving_root, '*'))
 
     def extract_video(self):
   
@@ -74,12 +76,11 @@ class Evaluator:
         fps = cam.get(cv2.CAP_PROP_FPS)
         # frame
         currentframe = 0
-        
         while(True):            
             # reading from frame
             ret,frame = cam.read()            
             if ret:
-                if frame % self.interval == 0:
+                if currentframe % self.interval == 0:
                     # if video is still left continue creating images
                     td = timedelta(seconds=(frame / fps))
                     name = osp.join(self.saving_root, str(td) + '.jpg')
