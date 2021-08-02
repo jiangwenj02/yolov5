@@ -295,12 +295,11 @@ class CSV_helper_gastric(object):
                 while i < len(row):
 
                     if not (pd.isna(row[i])):
-                        row_cell =  row[i].split('-')
+                        row_cell =  row[i].strip().split('-')
                         if not  (isinstance(row_cell[0], datetime.time) and isinstance(row_cell[1], datetime.time)):
                             try:
-
                                 start = datetime.datetime.strptime(row_cell[0], '%M:%S').time()
-                                end = datetime.datetime.strptime(row_cell[ 1], '%M:%S').time()
+                                end = datetime.datetime.strptime(row_cell[1], '%M:%S').time()
 
                             except:
 
