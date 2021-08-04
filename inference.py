@@ -17,7 +17,6 @@ class YoloBase(metaclass=ABCMeta):
         self.model = torch.hub.load(lib_dir, 'custom', path=weights, source='local', force_reload=True)
         self.save_dir = save_dir
 
-    @abstractmethod
     def predict(self, image: np.ndarray):
         """
         图像AI分析
