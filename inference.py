@@ -52,12 +52,13 @@ class YoloBase(metaclass=ABCMeta):
         pred = self.model(image)
         if self.save_dir is not None:
             pred.save()
+        pred_info = pred.xyxy[0].cpu().numpy()
         results = dict()
-        for i in range(pred.xyxy[0].shape[0]):
+        for i in range(pred_info.shape[0]):
             results[i] = dict()
-            results[i]['score'] = pred.xyxy[0][i, 4]
-            results[i]['pt'] = pred.xyxy[0][i, 0:4]
-            results[i]['type'] = pred.xyxy[0][i, 5]
+            results[i]['score'] = pred_info[i, 4]
+            results[i]['pt'] = pred_info[i, 0:4]
+            results[i]['type'] = pred_info[i, 5]
         return results
 
     def __call__(self, image: np.ndarray):
