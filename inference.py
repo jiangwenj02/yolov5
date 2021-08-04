@@ -13,6 +13,13 @@ from utils.datasets import letterbox
 
 class YoloBase(metaclass=ABCMeta):
     def __init__(self, lib_dir, weights, save_dir=None):
+        """
+        Args:
+            lib_dir (string): yolov5 路径
+            weights (string): 权重路径
+            save_dir (string): 是否存储图像，是则输入存储路径 不是则None
+
+        """
         # Load model
         self.model = torch.hub.load(lib_dir, 'custom', path=weights, source='local', force_reload=True)
         self.save_dir = save_dir
