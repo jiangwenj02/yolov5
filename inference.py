@@ -59,5 +59,5 @@ class YoloBase(metaclass=ABCMeta):
 
 
 if __name__ == '__main__':
-    detector = YoloBase('./', './runs/train/exp4/weights/best.pt', 'runs/hub/exp')
+    detector = YoloBase('./', './runs/train/exp4/weights/best.pt', save_dir='runs/hub/exp')
     detector.predict('/home1/users/jiangwenj02/mmdetection/data/erosiveulcer/images/00088057-49db-4200-ad48-4a011b0ff906.jpg')
