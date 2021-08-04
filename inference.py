@@ -44,7 +44,7 @@ class YoloBase(metaclass=ABCMeta):
 
         """
         pred = self.model(image)
-        if self.save_dir:
+        if self.save_dir is not None:
             pred.save()
         results = dict()
         for i in range(pred.xyxy[0].shape[0]):
