@@ -45,10 +45,10 @@ class YoloBase(metaclass=ABCMeta):
                 },
                 1: { ... }
             }
-            0：表示当前息肉编号，后面即为该息肉对应的数据；
-            score：为该息肉分数，分数越高表示息肉可能性越大；
-            pt：为息肉坐标；
-            type：为息肉类型：AP(腺瘤性息肉)、IP（炎性息肉）、HP（错构瘤性息肉）及OP（其他非上述类型息肉）
+            0：表示编号，后面即为对应的数据；
+            score：为该分数，分数越高表示可能性越大；
+            pt：为坐标；
+            type：0: erosive 1:ulcer 2: others
 
         """
         pred = self.model(image)
@@ -68,6 +68,6 @@ class YoloBase(metaclass=ABCMeta):
 
 
 if __name__ == '__main__':
-    detector = YoloBase('./', './runs/train/exp4/weights/best.pt', save_dir='runs/hub/exp', conf=0.40)
+    detector = YoloBase('./', './runs/train/exp4/weights/best.pt', save_dir='runs/hub/exp', conf=0.50)
     results = detector.predict('/home1/users/jiangwenj02/mmdetection/data/erosiveulcer/images/00088057-49db-4200-ad48-4a011b0ff906.jpg')
     print(results)
