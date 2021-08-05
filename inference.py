@@ -12,7 +12,7 @@ import cv2
 from utils.datasets import letterbox
 
 class YoloBase(metaclass=ABCMeta):
-    def __init__(self, lib_dir, weights, save_dir=None):
+    def __init__(self, lib_dir, weights, conf=0.30, iou=0.45, save_dir=None):
         """
         Args:
             lib_dir (string): yolov5 路径
@@ -22,6 +22,8 @@ class YoloBase(metaclass=ABCMeta):
         """
         # Load model
         self.model = torch.hub.load(lib_dir, 'custom', path=weights, source='local', force_reload=True)
+        self.model.conf = conf # confidence threshold (0-1)
+        self.model.iou = iou  # NMS IoU threshold (0-1)
         self.save_dir = save_dir
 
     def predict(self, image: np.ndarray):
@@ -66,6 +68,6 @@ class YoloBase(metaclass=ABCMeta):
 
 
 if __name__ == '__main__':
-    detector = YoloBase('./', './runs/train/exp4/weights/best.pt', save_dir='runs/hub/exp')
+    detector = YoloBase('./', './runs/train/exp4/weights/best.pt', save_dir='runs/hub/exp', conf=0.40)
     results = detector.predict('/home1/users/jiangwenj02/mmdetection/data/erosiveulcer/images/00088057-49db-4200-ad48-4a011b0ff906.jpg')
     print(results)
