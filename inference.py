@@ -72,6 +72,6 @@ if __name__ == '__main__':
     files = '/data3/zzhang/tmp/gastro_cancer/test.txt'
     with open(files, 'r') as f:
         files = f.readlines()
-    files = [file.strip for file in files]
+    files = [file.strip() for file in files]
     detector = YoloBase('./', './runs/train/exp18/weights/best.pt', size=640, save_dir='runs/hub/exp', conf=0.25)     
     results = detector.predict(files)
