@@ -54,7 +54,7 @@ class YoloBase(metaclass=ABCMeta):
         """
         pred = self.model(image, self.size)
         if self.save_dir is not None:
-            pred.save()
+            pred.save(self.save_dir)
         pred_info = pred.xyxy[0].cpu().numpy()
         results = dict()
         for i in range(pred_info.shape[0]):
@@ -73,5 +73,6 @@ if __name__ == '__main__':
     with open(files, 'r') as f:
         files = f.readlines()
     files = [file.strip() for file in files]
-    detector = YoloBase('./', './runs/train/exp18/weights/best.pt', size=640, save_dir='runs/hub/exp', conf=0.25)     
-    results = detector.predict(files)
+    detector = YoloBase('./', './runs/train/exp18/weights/best.pt', size=640, save_dir='runs/hub/test', conf=0.25)  
+    for file in files:   
+        results = detector.predict(file)
