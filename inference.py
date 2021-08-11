@@ -69,6 +69,9 @@ class YoloBase(metaclass=ABCMeta):
 
 
 if __name__ == '__main__':
-    detector = YoloBase('./', './runs/train/exp4/weights/best.pt', size=448, save_dir='runs/hub/exp', conf=0.50)
-    results = detector.predict('/home1/users/jiangwenj02/mmdetection/data/erosiveulcer/images/00088057-49db-4200-ad48-4a011b0ff906.jpg')
-    print(results)
+    files = '/data3/zzhang/tmp/gastro_cancer/test.txt'
+    with open(files, 'r') as f:
+        files = f.readlines()
+    detector = YoloBase('./', './runs/train/exp18/weights/best.pt', size=448, save_dir='runs/hub/exp', conf=0.50)
+    for file in files:        
+        results = detector.predict(file)
