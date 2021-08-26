@@ -100,7 +100,7 @@ class Evaluator:
             for frame in pbar:
                 torch.cuda.empty_cache()
                 ret_val, img = cap.read()
-                img = torch.from_numpy(img).to(self.device)
+                img = torch.from_numpy(img)
 
                 # Inference
                 t1 = time_synchronized()
@@ -133,8 +133,8 @@ class Evaluator:
                 img = mmcv.imresize(img, size=(frame_width, frame_height))
                 vid_writer.write(img)
                 count = count + 1
-                # if count > 50:
-                #     break
+                if count > 50:
+                    break
             end_time = time.time()
             spend_time = (end_time - start_time)
             det_speed = frame / spend_time
