@@ -88,10 +88,18 @@ class Evaluator:
             if not os.path.isfile(video_path):
                 print('{} not exist'.format(video_path))
                 continue
-            dataset = LoadVideos(video_path, img_size=self.opt.img_size, stride=self.stride)
+            cap = cv2.VideoCapture(video_path)
+
+            frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+            frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+            fps = cap.get(cv2.CAP_PROP_FPS)
+            length = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+            pbar = tqdm(range(length))
             count = 0 
             start_time = time.time()
-            for path, img, im0s, vid_cap in dataset:
+            for frame in pbar:
+                torch.cuda.empty_cache()
+                ret_val, img = cap.read()
                 img = torch.from_numpy(img).to(self.device)
 
                 # Inference
@@ -100,8 +108,6 @@ class Evaluator:
                 img = self.model.show_result(img, result, show=False)
                 t2 = time_synchronized()
 
-
-                p, s, im0, frame, fps = path, '', im0s.copy(), getattr(dataset, 'frame', 0), dataset.fps
                 p = Path(p)  # to Path
                 frame_time = frame / float(fps)
                 # import pdb
@@ -114,24 +120,17 @@ class Evaluator:
                     os.makedirs(osp.join(save_path, name), exist_ok=True)
                 os.makedirs(save_path, exist_ok=True)
 
-                # txt_path = osp.join(self.saving_root, 'labels', p.stem + '_' + str(frame))# img.txt
-                s += '%gx%g ' % img.shape[2:]  # print string
-
                 time_idx = self.time_in_break_time(break_time, frame_time)
                 all_fps_count[time_idx]  += 1
 
-                cv2.imwrite(os.path.join(fp_save_dirs[result['pred_label']], f"{video}_{frame}.jpg"), img)
-                
-                
-                # Print time (inference + NMS)
-                print(f'{s}Done. ({t2 - t1:.3f}s)')
+                cv2.imwrite(os.path.join(fp_save_dirs[result['pred_label']], f"{video}_{frame}.jpg"), img)                
 
                 if vid_path != vid_save_path:  # new video
                     w, h = img.shape[1], img.shape[0]
                     vid_path = vid_save_path
                     vid_save_path += '.mp4'                        
-                    vid_writer = cv2.VideoWriter(vid_save_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
-                img = mmcv.imresize(img, size=(w,h))
+                    vid_writer = cv2.VideoWriter(vid_save_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (frame_width, frame_height))
+                img = mmcv.imresize(img, size=(frame_width, frame_height))
                 vid_writer.write(img)
                 count = count + 1
                 # if count > 50:
