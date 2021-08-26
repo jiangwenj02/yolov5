@@ -59,8 +59,7 @@ class Evaluator:
         os.makedirs(self.saving_root, exist_ok=True)
 
     def _init_detector(self):
-        # Initialize
-        set_logging()
+
         device = select_device(self.opt.device)
         self.device = device
 
@@ -70,6 +69,7 @@ class Evaluator:
         self.model = model.to(self.device)
 
     def test_video(self,  csv_gt_annos, start_video_index, end_index):
+        self._init_detector()
         print('I am work at video form index {} to index {} '.format(start_video_index, end_index-1))
         csv_videos_susection = csv_gt_annos[start_video_index:end_index]
         summary_f = open(self.det_summary, 'w')
