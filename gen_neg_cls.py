@@ -110,6 +110,8 @@ class Evaluator:
             for frame in pbar:
                 torch.cuda.empty_cache()
                 ret_val, img_ori = cap.read()
+                if not ret_val:
+                    break
                 img = crop_img(img_ori)
 
                 # Inference
