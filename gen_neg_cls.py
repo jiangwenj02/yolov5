@@ -22,7 +22,7 @@ import torch
 from pathlib import Path
 import mmcv
 import time
-from mmcls import init_model, inference_model
+from mmcls.api import init_model, inference_model
 
 rois = {
     'big': [441, 1, 1278, 720],  # july video
