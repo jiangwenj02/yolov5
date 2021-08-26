@@ -65,7 +65,7 @@ class Evaluator:
         self.device = device
 
         # Load model
-        model = init_model(self.opt.config, self.opt.weight, self.device)
+        model = init_model(self.opt.config, self.opt.weights, self.device)
         self.names = model.CLASSES
         self.model = model
 
