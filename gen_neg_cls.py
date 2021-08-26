@@ -127,8 +127,8 @@ class Evaluator:
 
                 if vid_path != vid_save_path:  # new video
                     w, h = img.shape[1], img.shape[0]
-                    vid_path = vid_save_path
-                    vid_save_path += '.mp4'                        
+                    vid_save_path += '.mp4'  
+                    vid_path = vid_save_path                                          
                     vid_writer = cv2.VideoWriter(vid_save_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (frame_width, frame_height))
                 img = mmcv.imresize(img, size=(frame_width, frame_height))
                 vid_writer.write(img)
