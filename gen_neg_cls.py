@@ -97,6 +97,15 @@ class Evaluator:
             pbar = tqdm(range(length))
             count = 0 
             start_time = time.time()
+            p = Path(video_path)  # to Path
+            save_path = osp.join(self.saving_root, p.stem)  # img.jpg
+            print(save_path)
+            vid_save_path = osp.join(save_path, p.stem)
+            fp_save_dirs = []
+            for name in self.names:
+                fp_save_dirs.append(osp.join(save_path, name))
+                os.makedirs(osp.join(save_path, name), exist_ok=True)
+            os.makedirs(save_path, exist_ok=True)
             for frame in pbar:
                 torch.cuda.empty_cache()
                 ret_val, img = cap.read()
@@ -106,18 +115,10 @@ class Evaluator:
                 result = inference_model(self.model, img)
                 img = self.model.show_result(img, result, show=False)
                 t2 = time_synchronized()
-
-                p = Path(p)  # to Path
+                
                 frame_time = frame / float(fps)
                 # import pdb
-                # pdb.set_trace()
-                save_path = osp.join(self.saving_root, p.stem)  # img.jpg
-                vid_save_path = osp.join(save_path, p.stem)
-                fp_save_dirs = []
-                for name in self.names:
-                    fp_save_dirs.append(osp.join(save_path, name))
-                    os.makedirs(osp.join(save_path, name), exist_ok=True)
-                os.makedirs(save_path, exist_ok=True)
+                # pdb.set_trace()                
 
                 time_idx = self.time_in_break_time(break_time, frame_time)
                 all_fps_count[time_idx]  += 1
