@@ -23,6 +23,7 @@ from pathlib import Path
 import mmcv
 import time
 from mmcls.apis import init_model, inference_model
+from utils.img_crop import crop_img
 
 rois = {
     'big': [441, 1, 1278, 720],  # july video
@@ -108,12 +109,13 @@ class Evaluator:
             os.makedirs(save_path, exist_ok=True)
             for frame in pbar:
                 torch.cuda.empty_cache()
-                ret_val, img = cap.read()
+                ret_val, img_ori = cap.read()
+                img = crop_img(img_ori)
 
                 # Inference
                 t1 = time_synchronized()
                 result = inference_model(self.model, img)
-                img = self.model.show_result(img, result, show=False)
+                img = self.model.show_result(img_ori, result, show=False)
                 t2 = time_synchronized()
                 
                 frame_time = frame / float(fps)
