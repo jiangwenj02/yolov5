@@ -65,9 +65,9 @@ class Evaluator:
         self.device = device
 
         # Load model
-        model = init_model(self.opt.config, self.opt.weights, self.device)
+        model = init_model(self.opt.config, checkpoint=self.opt.weights, device='cpu')
         self.names = model.CLASSES
-        self.model = model
+        self.model = model.to(self.device)
 
     def test_video(self,  csv_gt_annos, start_video_index, end_index):
         self._init_detector()
@@ -313,7 +313,7 @@ if __name__ == '__main__':
     parser.add_argument('--start', default=0, type=int,  help="video index to start")
     parser.add_argument('--end', default=0, type=int, help="video index to end")
     parser.add_argument('--config', nargs='+', type=str, default='/data3/zzhang/mmclassification/configs/diseased/resnet50_cancer.py', help='model.pt path(s)')
-    parser.add_argument('--weights', nargs='+', type=str, default='/data3/zzhang/mmclassification/resnet50_cancer/latest.pth', help='model.pt path(s)')
+    parser.add_argument('--weights', nargs='+', type=str, default='/data3/zzhang/mmclassification/work_dirs/resnet50_cancer/latest.pth', help='model.pt path(s)')
     parser.add_argument('--source', type=str, default='data/images', help='source')  # file/folder, 0 for webcam
     parser.add_argument('--img-size', type=int, default=640, help='inference size (pixels)')
     parser.add_argument('--conf-thres', type=float, default=0.25, help='object confidence threshold')
