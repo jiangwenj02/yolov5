@@ -312,7 +312,8 @@ if __name__ == '__main__':
     # parser.add_argument('--det_summary', type=str, default='/data3/zzhang/tmp/erosive_ulcer_videos0615/summary.txt', help='source')  # file/folder, 0 for webcam
     parser.add_argument('--start', default=0, type=int,  help="video index to start")
     parser.add_argument('--end', default=0, type=int, help="video index to end")
-    parser.add_argument('--weights', nargs='+', type=str, default='runs/train/exp4/weights/best.pt', help='model.pt path(s)')
+    parser.add_argument('--config', nargs='+', type=str, default='/data3/zzhang/mmclassification/configs/diseased/resnet50_cancer.py', help='model.pt path(s)')
+    parser.add_argument('--weights', nargs='+', type=str, default='/data3/zzhang/mmclassification/resnet50_cancer/latest.pth', help='model.pt path(s)')
     parser.add_argument('--source', type=str, default='data/images', help='source')  # file/folder, 0 for webcam
     parser.add_argument('--img-size', type=int, default=640, help='inference size (pixels)')
     parser.add_argument('--conf-thres', type=float, default=0.25, help='object confidence threshold')
