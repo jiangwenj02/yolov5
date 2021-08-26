@@ -65,12 +65,11 @@ class Evaluator:
         self.device = device
 
         # Load model
-        model = init_model(self.opt.config, checkpoint=self.opt.weights, device='cpu')
+        model = init_model(self.opt.config, checkpoint=self.opt.weights[0], device='cpu')
         self.names = model.CLASSES
         self.model = model.to(self.device)
 
     def test_video(self,  csv_gt_annos, start_video_index, end_index):
-        self._init_detector()
         print('I am work at video form index {} to index {} '.format(start_video_index, end_index-1))
         csv_videos_susection = csv_gt_annos[start_video_index:end_index]
         summary_f = open(self.det_summary, 'w')
