@@ -100,7 +100,6 @@ class Evaluator:
             for frame in pbar:
                 torch.cuda.empty_cache()
                 ret_val, img = cap.read()
-                img = torch.from_numpy(img)
 
                 # Inference
                 t1 = time_synchronized()
