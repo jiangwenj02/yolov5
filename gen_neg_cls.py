@@ -133,8 +133,7 @@ class Evaluator:
                 img = mmcv.imresize(img, size=(frame_width, frame_height))
                 vid_writer.write(img)
                 count = count + 1
-                if count > 50:
-                    break
+ 
             end_time = time.time()
             spend_time = (end_time - start_time)
             det_speed = frame / spend_time
