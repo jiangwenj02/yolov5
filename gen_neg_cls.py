@@ -127,6 +127,7 @@ class Evaluator:
 
                 time_idx = self.time_in_break_time(break_time, frame_time)
                 all_fps_count[time_idx]  += 1
+                print(result['pred_label'], self.save_train_images)
                 if result['pred_label'] == 0 and self.save_train_images is not None:
                     print(os.path.join(self.save_train_images, f"{video}_{frame}.jpg"))
                     cv2.imwrite(os.path.join(self.save_train_images, f"{video}_{frame}.jpg"), crop_imgs) 
