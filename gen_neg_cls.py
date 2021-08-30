@@ -56,7 +56,7 @@ class Evaluator:
         self.saving_root = opt.save_path
         self.video_root = opt.video_path
         self.det_summary = osp.join(self.saving_root, 'summary.txt')
-        self.save_train_images = opt.save_image_path
+        self.save_train_images = opt.save_train_images
         os.popen('rm -r ' + osp.join(self.saving_root, '*'))
         os.makedirs(self.saving_root, exist_ok=True)
 
