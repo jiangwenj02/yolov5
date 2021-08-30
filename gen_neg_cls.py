@@ -113,11 +113,11 @@ class Evaluator:
                 ret_val, img_ori = cap.read()
                 if not ret_val:
                     break
-                crop_img = crop_img(img_ori)
+                crop_imgs = crop_img(img_ori)
 
                 # Inference
                 t1 = time_synchronized()
-                result = inference_model(self.model, crop_img)
+                result = inference_model(self.model, crop_imgs)
                 img = self.model.show_result(img_ori, result, show=False)
                 t2 = time_synchronized()
                 
