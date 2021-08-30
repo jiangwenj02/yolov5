@@ -56,6 +56,7 @@ class Evaluator:
         self.saving_root = opt.save_path
         self.video_root = opt.video_path
         self.det_summary = osp.join(self.saving_root, 'summary.txt')
+        self.save_train_images = opt.save_image_path
         os.popen('rm -r ' + osp.join(self.saving_root, '*'))
         os.makedirs(self.saving_root, exist_ok=True)
 
@@ -112,11 +113,11 @@ class Evaluator:
                 ret_val, img_ori = cap.read()
                 if not ret_val:
                     break
-                img = crop_img(img_ori)
+                crop_img = crop_img(img_ori)
 
                 # Inference
                 t1 = time_synchronized()
-                result = inference_model(self.model, img)
+                result = inference_model(self.model, crop_img)
                 img = self.model.show_result(img_ori, result, show=False)
                 t2 = time_synchronized()
                 
@@ -126,7 +127,8 @@ class Evaluator:
 
                 time_idx = self.time_in_break_time(break_time, frame_time)
                 all_fps_count[time_idx]  += 1
-
+                if result['pred_label'] == 0 and self.save_train_images is not None:
+                    cv2.imwrite(os.path.join(self.save_train_images, f"{video}_{frame}.jpg"), img) 
                 cv2.imwrite(os.path.join(fp_save_dirs[result['pred_label']], f"{video}_{frame}.jpg"), img)                
 
                 if vid_path != vid_save_path:  # new video
@@ -310,6 +312,7 @@ if __name__ == '__main__':
     parser.add_argument('--csv_file', type=str, default='neg0615.csv', help='source')  # file/folder, 0 for webcam
     parser.add_argument('--video_path', type=str, default='/data2/qilei_chen/DATA/erosive_ulcer_videos', help='source')  # file/folder, 0 for webcam
     parser.add_argument('--save_path', type=str, default='/data3/zzhang/tmp/erosive_ulcer_videos0615/', help='source')  # file/folder, 0 for webcam
+    parser.add_argument('--save_train_images', default=None, help='source')  # file/folder, 0 for webcam
     # parser.add_argument('--det_summary', type=str, default='/data3/zzhang/tmp/erosive_ulcer_videos0615/summary.txt', help='source')  # file/folder, 0 for webcam
     parser.add_argument('--start', default=0, type=int,  help="video index to start")
     parser.add_argument('--end', default=0, type=int, help="video index to end")
