@@ -107,9 +107,8 @@ class Evaluator:
 
                 # Process detections
                 for i, det in enumerate(pred):  # detections per image
-                    p, s, im0, frame, fps = path, '', im0s.copy(), getattr(dataset, 'frame', 0), dataset.fps
+                    p, s, im0 = path, '', im0s.copy()
                     p = Path(p)  # to Path
-                    frame_time = frame / float(fps)
                     # import pdb
                     # pdb.set_trace()
                     save_path = osp.join(self.saving_root, class_dir, p.stem)  # img.jpg
