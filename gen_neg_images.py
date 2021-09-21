@@ -113,6 +113,8 @@ class Evaluator:
                     # pdb.set_trace()
                     save_path = osp.join(self.saving_root, class_dir, p.stem + '.jpg')  # img.jpg
                     print(save_path)
+                    import pdb
+                    pdb.set_trace()
                     # txt_path = osp.join(self.saving_root, 'labels', p.stem + '_' + str(frame))# img.txt
                     s += '%gx%g ' % img.shape[2:]  # print string
                     gn = torch.tensor(im0.shape)[[1, 0, 1, 0]]  # normalization gain whwh
