@@ -112,7 +112,7 @@ class Evaluator:
                     # import pdb
                     # pdb.set_trace()
                     save_path = osp.join(self.saving_root, class_dir, p.stem + '.jpg')  # img.jpg
-                    print(save_path)
+                    print(self.saving_root, save_path)
                     import pdb
                     pdb.set_trace()
                     # txt_path = osp.join(self.saving_root, 'labels', p.stem + '_' + str(frame))# img.txt
