@@ -82,6 +82,7 @@ class Evaluator:
         self._init_detector()
         class_dirs = glob.glob(osp.join(self.image_path,'*'))
         for index,  class_dir in enumerate(class_dirs):
+            class_dir = osp.basename(class_dir)
             save_path = osp.join(self.saving_root, class_dir)
             os.makedirs(save_path, exist_ok=True)
 
@@ -112,9 +113,9 @@ class Evaluator:
                     # import pdb
                     # pdb.set_trace()
                     save_path = osp.join(self.saving_root, class_dir, p.stem + '.jpg')  # img.jpg
-                    print(self.saving_root, save_path)
-                    import pdb
-                    pdb.set_trace()
+                    # print(self.saving_root, save_path)
+                    # import pdb
+                    # pdb.set_trace()
                     # txt_path = osp.join(self.saving_root, 'labels', p.stem + '_' + str(frame))# img.txt
                     s += '%gx%g ' % img.shape[2:]  # print string
                     gn = torch.tensor(im0.shape)[[1, 0, 1, 0]]  # normalization gain whwh
