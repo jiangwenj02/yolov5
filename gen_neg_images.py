@@ -111,7 +111,7 @@ class Evaluator:
                     p = Path(p)  # to Path
                     # import pdb
                     # pdb.set_trace()
-                    save_path = osp.join(self.saving_root, class_dir, p.stem)  # img.jpg
+                    save_path = osp.join(self.saving_root, class_dir, p.stem + '.jpg')  # img.jpg
                     print(save_path)
                     # txt_path = osp.join(self.saving_root, 'labels', p.stem + '_' + str(frame))# img.txt
                     s += '%gx%g ' % img.shape[2:]  # print string
@@ -141,6 +141,7 @@ class Evaluator:
                             
                             # print(frame_time, break_time, frame, fps, time_idx)
                             # exit()
+                        
                         cv2.imwrite(save_path, im0)
 
                     # Print time (inference + NMS)
