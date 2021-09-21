@@ -80,12 +80,12 @@ class Evaluator:
 
     def test_images(self):
         self._init_detector()
-        class_dirs = glob.glob(osp.join(self.images_root,'*'))
+        class_dirs = glob.glob(osp.join(self.image_path,'*'))
         for index,  class_dir in enumerate(class_dirs):
             save_path = osp.join(self.saving_root, class_dir)
             os.makedirs(save_path, exist_ok=True)
 
-            image_path = os.path.join(self.images_root, class_dir)
+            image_path = os.path.join(self.image_path, class_dir)
             dataset = LoadImages(image_path, img_size=self.opt.img_size, stride=self.stride)
             count = 0 
             start_time = time.time()
