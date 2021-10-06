@@ -144,7 +144,7 @@ def test(data,
                 if nl:
                     stats.append((torch.zeros(0, niou, dtype=torch.bool), torch.Tensor(), torch.Tensor(), tcls))
                 continue
-            count = count + len(out)
+
             # Predictions
             if single_cls:
                 pred[:, 5] = 0
@@ -187,6 +187,7 @@ def test(data,
                 box = xyxy2xywh2(predn[:, :4])  # xywh
                 # box[:, :2] -= box[:, 2:] / 2  # xy center to top-left corner
                 for p, b in zip(pred.tolist(), box.tolist()):
+                    count = count + 1
                     jdict.append({'image_id': image_id,
                                   'category_id': int(p[5]) + 1,
                                   'bbox': [round(x, 3) for x in b],
