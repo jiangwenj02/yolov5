@@ -133,7 +133,7 @@ def test(data,
 
         # Statistics per image
         for si, pred in enumerate(out): 
-            count = count + len(out)
+            
             labels = targets[targets[:, 0] == si, 1:]
             nl = len(labels)
             tcls = labels[:, 0].tolist() if nl else []  # target class
@@ -144,7 +144,7 @@ def test(data,
                 if nl:
                     stats.append((torch.zeros(0, niou, dtype=torch.bool), torch.Tensor(), torch.Tensor(), tcls))
                 continue
-
+            count = count + len(out)
             # Predictions
             if single_cls:
                 pred[:, 5] = 0
