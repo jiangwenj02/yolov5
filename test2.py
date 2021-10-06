@@ -105,10 +105,12 @@ def test(data,
 
     anno = COCO(anno_json)  # init annotations api
     coco_imgs = anno.imgs
+    count = 0
     for batch_i, (img, targets, paths, shapes) in enumerate(tqdm(dataloader, desc=s)):
         img = img.to(device, non_blocking=True)
         img = img.half() if half else img.float()  # uint8 to fp16/32
         img /= 255.0  # 0 - 255 to 0.0 - 1.0
+        print(img.max(), img.min())
         targets = targets.to(device)
         nb, _, height, width = img.shape  # batch size, channels, height, width
 
@@ -131,7 +133,8 @@ def test(data,
         
 
         # Statistics per image
-        for si, pred in enumerate(out):
+        for si, pred in enumerate(out): 
+            count = count + 1
             labels = targets[targets[:, 0] == si, 1:]
             nl = len(labels)
             tcls = labels[:, 0].tolist() if nl else []  # target class
@@ -288,6 +291,7 @@ def test(data,
         except Exception as e:
             print(f'pycocotools unable to run: {e}')
 
+    print(count)
     # Return results
     model.float()  # for training
     if not training:
