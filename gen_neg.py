@@ -296,7 +296,9 @@ class CSV_helper_gastric(object):
 
                     if not (pd.isna(row[i])):
                         row_cell =  row[i].strip().split('-')
-                        # print(row_cell)
+                        print(row_cell, (isinstance(row_cell[0], datetime.time) and isinstance(row_cell[1], datetime.time)))
+                        import pdb
+                        pdb.set_trace()
                         if (isinstance(row_cell[0], datetime.time) and isinstance(row_cell[1], datetime.time)):
                             try:
                                 start = datetime.datetime.strptime(row_cell[0], '%M:%S').time()
