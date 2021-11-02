@@ -94,6 +94,9 @@ class Evaluator:
 
             video_path = os.path.join(self.video_root, video)
             vid_path, vid_writer = None, None
+            if video_path[:-4] != '.avi':
+                video_path = video_path + '.avi'
+
             if not os.path.isfile(video_path):
                 print('{} not exist'.format(video_path))
                 continue
