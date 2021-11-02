@@ -296,19 +296,15 @@ class CSV_helper_gastric(object):
 
                     if not (pd.isna(row[i])):
                         row_cell =  row[i].strip().split('-')
-                        print(row_cell, (isinstance(row_cell[0], datetime.time) and isinstance(row_cell[1], datetime.time)))
-                        import pdb
-                        pdb.set_trace()
-                        if (isinstance(row_cell[0], datetime.time) and isinstance(row_cell[1], datetime.time)):
-                            try:
-                                start = datetime.datetime.strptime(row_cell[0], '%M:%S').time()
-                                end = datetime.datetime.strptime(row_cell[1], '%M:%S').time()
-
-                            except:
-                                print(row_cell)
-                        else:
+                        # print(row_cell, (isinstance(row_cell[0], datetime.time) and isinstance(row_cell[1], datetime.time)))
+                        # import pdb
+                        # pdb.set_trace()
+                        # if (isinstance(row_cell[0], datetime.time) and isinstance(row_cell[1], datetime.time)):
+                        try:
+                            start = datetime.datetime.strptime(row_cell[0], '%M:%S').time()
+                            end = datetime.datetime.strptime(row_cell[1], '%M:%S').time()
+                        except:
                             continue
-
 
                         start_second = (start.hour * 60 + start.minute) * 60 + start.second
                         end_second = (end.hour * 60 + end.minute) * 60 + end.second
