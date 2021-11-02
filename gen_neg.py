@@ -288,6 +288,8 @@ class CSV_helper_gastric(object):
                 'time_break':[],
                 'time_break_name':[]
             }
+            if index > 25:
+                break
             if not pd.isna(name):
 
                 row = self.dataframe.iloc[index][2:]
