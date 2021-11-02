@@ -292,8 +292,7 @@ class CSV_helper_gastric(object):
 
                 row = self.dataframe.iloc[index][2:]
 
-                i = 0
-                while i < len(row):
+                for i in tqdm(range(len(row))):
 
                     if not (pd.isna(row[i])):
                         row_cell =  row[i].strip().split('-')
@@ -315,7 +314,6 @@ class CSV_helper_gastric(object):
                         tp['time_break'].extend([start_second, end_second])
                         tp['time_break_name'].extend([row_cell[0], row_cell[1]])
 
-                    i += 1
                 self.tp_annos.append(tp)
         print(self.tp_annos)
         return self.tp_annos
