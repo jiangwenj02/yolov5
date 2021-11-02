@@ -304,8 +304,7 @@ class CSV_helper_gastric(object):
                                 end = datetime.datetime.strptime(row_cell[1], '%M:%S').time()
 
                             except:
-                                start = datetime.datetime.strptime(row_cell[0], '%H:%M:%S').time()
-                                end = datetime.datetime.strptime(row_cell[ 1], '%H:%M:%S').time()
+                                print(row_cell)
                         else:
                             continue
 
