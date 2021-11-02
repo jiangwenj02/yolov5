@@ -317,6 +317,7 @@ class CSV_helper_gastric(object):
 
                     i += 1
                 self.tp_annos.append(tp)
+        print(self.tp_annos)
         return self.tp_annos
 
 
