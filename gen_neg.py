@@ -303,10 +303,10 @@ class CSV_helper_gastric(object):
                         try:
                             start = datetime.datetime.strptime(row_cell[0], '%M:%S').time()
                             end = datetime.datetime.strptime(row_cell[1], '%M:%S').time()
+                        except ValueError:
+                            start = datetime.datetime.strptime(row_cell[0], '%H:%M:%S').time()
+                            end = datetime.datetime.strptime(row_cell[1], '%H:%M:%S').time()
                         except:
-                            print(row_cell)
-                            import pdb
-                            pdb.set_trace()
                             continue
 
                         start_second = (start.hour * 60 + start.minute) * 60 + start.second
