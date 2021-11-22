@@ -94,8 +94,6 @@ class Evaluator:
 
             video_path = os.path.join(self.video_root, video)
             vid_path, vid_writer = None, None
-            if video_path[:-4] != '.avi':
-                video_path = video_path + '.avi'
 
             if not os.path.isfile(video_path):
                 print('{} not exist'.format(video_path))
@@ -235,6 +233,7 @@ class CSV_helper(object):
         self.tp_annos = []
 
         for index, name in enumerate(self.video_names):
+            
             tp = {
                 'video_name':name,
                 'tp_range':[]
@@ -276,12 +275,16 @@ class CSV_helper_gastric(object):
         self.dataframe = pd.read_excel(path)
 
 
-    def get_annos(self):
+    def get_annos(self, video_path):
         print(self.dataframe)
         self.video_names = self.dataframe['video_name']
         self.tp_annos = []
 
         for index, name in enumerate(self.video_names):
+            if name[:-4] != '.avi':
+                name = name + '.avi'
+            if not osp.exists(osp.join(video_path, name)):
+                print(index, name)
             tp = {
                 'video_name':name,
                 'tp_range':[],
@@ -388,6 +391,7 @@ if __name__ == '__main__':
     csv.open_csv(args.csv_file)
 
     gt = csv.get_annos()
+    exit()
     print('total video {}'.format(len(gt)))
     if args.end == 0:
         args.end = len(gt)
