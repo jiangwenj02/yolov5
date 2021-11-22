@@ -284,7 +284,7 @@ class CSV_helper_gastric(object):
             if name[:-4] != '.avi':
                 name = name + '.avi'
             if not osp.exists(osp.join(video_path, name)):
-                print(index, name)
+                print(index, ': ', name, ' not exist')
             tp = {
                 'video_name':name,
                 'tp_range':[],
