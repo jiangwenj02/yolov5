@@ -276,7 +276,7 @@ class CSV_helper_gastric(object):
 
 
     def get_annos(self, video_path):
-        print(self.dataframe)
+        # print(self.dataframe)
         self.video_names = self.dataframe['video_name']
         self.tp_annos = []
 
