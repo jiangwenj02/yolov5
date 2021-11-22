@@ -394,7 +394,7 @@ if __name__ == '__main__':
     csv.open_csv(args.csv_file)
 
     gt = csv.get_annos(args.video_path)
-    exit()
+
     print('total video {}'.format(len(gt)))
     if args.end == 0:
         args.end = len(gt)
