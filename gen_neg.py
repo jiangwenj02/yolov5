@@ -279,7 +279,8 @@ class CSV_helper_gastric(object):
         # print(self.dataframe)
         self.video_names = self.dataframe['video_name']
         self.tp_annos = []
-
+        import pdb
+        pdb.set_trace()
         for index, name in enumerate(self.video_names):
             if name[:-4] != '.avi':
                 name = name + '.avi'
