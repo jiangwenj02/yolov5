@@ -282,8 +282,8 @@ class CSV_helper_gastric(object):
         # import pdb
         # pdb.set_trace()
         for index, name in enumerate(self.video_names):
-            if index <= 25:
-                continue
+            # if index <= 25:
+            #     continue
 
             if name[:-4] != '.avi':
                 name = name + '.avi'
@@ -325,7 +325,7 @@ class CSV_helper_gastric(object):
                         tp['time_break_name'].extend([row_cell[0], row_cell[1]])
 
                 self.tp_annos.append(tp)
-        print(self.tp_annos)
+        # print(self.tp_annos)
         return self.tp_annos
 
 
