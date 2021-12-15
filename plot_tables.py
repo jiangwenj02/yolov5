@@ -34,18 +34,38 @@ class Evaluator:
                 print(video)
                 continue
             det_result = self.det_summary.summary[video.replace('.avi', '')]
-            print(det_result)
             first_frame = det_result['start'][0]
-            det_frames_in = [int(float(frames) * float(ratios) / 100) for frames, ratios in zip(det_result['all_fps'][1:-1:2], det_result['det_Pro'][1:-1:2])]
-            frames_in = [int(frames) for frames in det_result['all_fps'][1:-1:2]]
-            det_frames_out = [int(frames) for frames in det_result['all_fps'][0:-1:2]]
-            det_frame_ratio_in = sum(det_frames_in) / (sum(frames_in) + 1)
-            det_frames_out = sum(det_frames_out)            
-            insertRow = pd.DataFrame([[video.replace('.avi', ''), first_frame, det_frame_ratio_in, det_frames_out]])
-            
+            first_frames = ['first_frame']
+            first_frames.extend(det_result['start'][1::2])
+            det_frames_in = [int(float(frames) * float(ratios) / 100) for frames, ratios in zip(det_result['all_fps'][1::2], det_result['det_Pro'][1::2])]
+            frames_in = [int(frames) for frames in det_result['all_fps'][1::2]]
+            det_frames_out = [int(frames) for frames in det_result['all_fps'][0::2]]
+            det_frame_ratio_in = sum(det_frames_in) / (sum(frames_in) + 1) * 100
+            det_frames_out = sum(det_frames_out) 
+            det_pros = ['det_Pro']
+            det_times = ['time']
+            # print(det_result['time'][0:2], det_result['time'][1::2])
+            det_times.extend([start_time + '-' + end_time for start_time, end_time in zip(det_result['time'][0::2], det_result['time'][1::2])])
+            det_pros.extend(det_result['det_Pro'][1::2])
+            det_pros.append(det_frame_ratio_in)
+            det_all = True
+            for pro in det_result['det_Pro'][1::2]:
+                det_all =  det_all and (float(pro) > 0)
+            det_pros.append(det_all)
+                       
+            # insertRow = pd.DataFrame([[video.replace('.avi', ''), first_frame, det_frame_ratio_in, det_frames_out]])
+
+            # print(pd.DataFrame([['first_frame'].extend(first_frames)]))
+            insertRow = pd.DataFrame([[video.replace('.avi', '')]])
             table = pd.concat([table, insertRow], ignore_index = True)
-            print(table)
-        table.to_csv(self.save_file, header=['video_name', 'first_frame', 'dets_in_anno', 'dets_out_anno'], index = None)
+            table = pd.concat([table, pd.DataFrame([det_times])], ignore_index = True)
+            table = pd.concat([table, pd.DataFrame([first_frames])], ignore_index = True)
+            table = pd.concat([table, pd.DataFrame([det_pros])], ignore_index = True)
+            # table = pd.concat([table, pd.DataFrame([['det_all'].append(det_all)])], ignore_index = True)
+            # print(table)
+            # break
+        # table.to_csv(self.save_file, header=['video_name', 'first_frame', 'dets_in_anno', 'dets_out_anno'], index = None)
+        table.to_csv(self.save_file, index = None)
     
 
 class parser_summary(object):
@@ -62,6 +82,7 @@ class parser_summary(object):
             key_value = line.split(' ')
             if len(key_value) == 1:
                 if key_value[0] in self.keys:
+                    self.summary[current_key][key_value[0]] = key_value[1:]
                     continue
                 self.summary[key_value[0].replace('.avi', '')] = dict()
                 current_key = key_value[0].replace('.avi', '')
