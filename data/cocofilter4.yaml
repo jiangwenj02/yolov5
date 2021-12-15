@@ -9,7 +9,7 @@
 # download: bash data/scripts/get_coco.sh
 
 # train and val data as 1) directory: path/images/, 2) file: path/images.txt, or 3) list: [path1/images/, path2/images/]
-train: /data3/zzhang/annotation/erosiveulcer_fine/trainfp1115.txt  # 118287 images
+train: /data3/zzhang/annotation/erosiveulcer_fine/trainfp1215.txt  # 118287 images
 val: /data3/zzhang/annotation/erosiveulcer_fine/testfp1006.txt  # 5000 images
 test: /data3/zzhang/annotation/erosiveulcer_fine/testfp1006.txt  # 20288 of 40670 images, submit to https://competitions.codalab.org/competitions/20794
 # val: /data3/zzhang/tmp/gastro_cancer/test.txt  # 5000 images
