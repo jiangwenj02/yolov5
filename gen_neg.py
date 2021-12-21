@@ -68,8 +68,6 @@ class Evaluator:
         self.stride = int(model.stride.max())  # model stride
         imgsz = check_img_size(self.opt.img_size, s=self.stride)  # check img_size
         self.names = model.module.names if hasattr(model, 'module') else model.names  # get class names
-        import pdb
-        pdb.set_trace()
         # self.names = ['erosive', 'ulcer', 'other', 'hemorrhage']
         self.half = half
         if half:
@@ -284,8 +282,6 @@ class CSV_helper_gastric(object):
         # import pdb
         # pdb.set_trace()
         for index, name in enumerate(self.video_names):
-            if index <= 5:
-                continue
 
             if name[:-4] != '.avi':
                 name = name + '.avi'
