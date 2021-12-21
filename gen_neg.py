@@ -282,8 +282,8 @@ class CSV_helper_gastric(object):
         # import pdb
         # pdb.set_trace()
         for index, name in enumerate(self.video_names):
-            # if index <= 25:
-            #     continue
+            if index <= 5:
+                continue
 
             if name[:-4] != '.avi':
                 name = name + '.avi'
