@@ -4,7 +4,7 @@ python gen_neg.py --csv_file /data3/zzhang/annotation/erosiveulcer_fine/neg0615.
 python gen_neg_cls.py --csv_file /data3/zzhang/tmp/anno0724.csv --video_path /data2/qilei_chen/DATA/erosive_ulcer_videos/ --save_path /data3/zzhang/tmp/erosive_ulcer_videos0831_cls/  --weights /data3/zzhang/mmclassification/work_dirs/resnet50_cancer_adddata/latest.pth
 python gen_neg.py --csv_file /data3/zzhang/tmp/anno1110-5.csv --video_path /data2/qilei_chen/jianjiwanzhengshipin2/preprocessed/ --save_path /data3/zzhang/tmp/erosive_ulcer_videos1110/preprocessed/ --weights runs/train/exp30/weights/best.pt --conf-thres 0.5 && python gen_neg.py --csv_file /data3/zzhang/tmp/anno1110-5.csv --video_path /data2/qilei_chen/jianjiwanzhengshipin2/preprocessed2/ --save_path /data3/zzhang/tmp/erosive_ulcer_videos1110/preprocessed2/ --weights runs/train/exp30/weights/best.pt --conf-thres 0.5 && python gen_neg.py --csv_file /data3/zzhang/tmp/anno1110-5.csv --video_path /data2/qilei_chen/jianjiwanzhengshipin2/preprocessed/ --save_path /data3/zzhang/tmp/erosive_ulcer_videos1110/preprocessed/ --weights runs/train/exp30/weights/best.pt --conf-thres 0.5
 python gen_neg.py --csv_file /data3/zzhang/tmp/anno1110-5.csv --video_path /data2/qilei_chen/jianjiwanzhengshipin2/preprocessed/ --save_path /data3/zzhang/tmp/erosive_ulcer_videos1221/preprocessed/ --weights runs/train/exp34/weights/last.pt --conf-thres 0.5
-
+python gen_neg.py --csv_file /data3/zzhang/tmp/anno1228.csv --video_path /data3/zzhang/tmp/test-video-1226/ --save_path /data3/zzhang/tmp/erosive_ulcer_videos1228/ --weights runs/train/exp35/weights/last.pt --conf-thres 0.5
 ####adding new data
 1、ls images/ > new.txt
 2、mmdetection python tools/dataset_converters/image2json.py
