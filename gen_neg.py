@@ -282,7 +282,7 @@ class CSV_helper_gastric(object):
         # import pdb
         # pdb.set_trace()
         for index, name in enumerate(self.video_names):
-            print(name[:-4] != '.avi', name[:-4] != '.mp4')
+            print(name[:-4], name[:-4] != '.avi', name[:-4] != '.mp4')
             if name[:-4] != '.avi' and name[:-4] != '.mp4':
                 name = name + '.avi'
             if not osp.exists(osp.join(video_path, name)):
