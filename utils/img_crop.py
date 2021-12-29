@@ -24,8 +24,10 @@ def crop_img(img):
     x_bands = np.sum(truth_map, axis=0) / truth_map.shape[0]
     left_crop_index = np.argmax(x_bands < threshold)
     right_crop_index = x_bands.shape[0] - np.argmax(x_bands[::-1] < threshold)
-
-    cropped_arr = arr[top_crop_index:bottom_crop_index, left_crop_index:right_crop_index, :]
+    if bottom_crop_index > top_crop_index and right_crop_index > left_crop_index:
+        cropped_arr = arr[top_crop_index:bottom_crop_index, left_crop_index:right_crop_index, :]
+    else:
+        cropped_arr = arr
     toolbar_end = cropped_arr.shape[0]
     for i in range(cropped_arr.shape[0] - 1, 0, -1):
         c = Counter([tuple(l) for l in cropped_arr[i, :, :].tolist()])
