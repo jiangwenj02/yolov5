@@ -26,17 +26,17 @@ def crop_img(img):
     right_crop_index = x_bands.shape[0] - np.argmax(x_bands[::-1] < threshold)
     if bottom_crop_index > top_crop_index and right_crop_index > left_crop_index:
         cropped_arr = arr[top_crop_index:bottom_crop_index, left_crop_index:right_crop_index, :]
+        toolbar_end = cropped_arr.shape[0]
+        for i in range(cropped_arr.shape[0] - 1, 0, -1):
+            c = Counter([tuple(l) for l in cropped_arr[i, :, :].tolist()])
+            ratio = c.most_common(1)[0][-1] / cropped_arr.shape[1]
+            if ratio < 0.3:
+                toolbar_end = i
+                break
+        cropped_arr = cropped_arr[:toolbar_end, :, :]
     else:
         cropped_arr = arr
-    toolbar_end = cropped_arr.shape[0]
-    for i in range(cropped_arr.shape[0] - 1, 0, -1):
-        c = Counter([tuple(l) for l in cropped_arr[i, :, :].tolist()])
-        ratio = c.most_common(1)[0][-1] / cropped_arr.shape[1]
-        if ratio < 0.3:
-            toolbar_end = i
-            break
-
-    cropped_arr = cropped_arr[:toolbar_end, :, :]
+    
     return cropped_arr
     #return Image.fromarray(cropped_arr)
 
