@@ -124,9 +124,9 @@ class Evaluator:
                     # if video is still left continue creating images
                     td = timedelta(seconds=(currentframe / fps))
                     # basename = '{}.jpg'.format(str(td))    
-                    frame = crop_img(frame)
+                    # frame = crop_img(frame)
                     crop = True                
-                    # frame = frame[30:267, 87:404, :]
+                    # frame = frame[100:660, 267:1040, :]
                     basename = '{0:08d}.jpg'.format(currentframe)
                     name = osp.join(self.saving_root, basename)           
                     # savePath = (r"D:\sxl\处理图片\汉字分类\train653_badHandle\%d.jpg" % (count))         
@@ -139,8 +139,9 @@ class Evaluator:
 
                 if currentframe % save_intervel == 0 and len(im_list_2d) < self.nums * self.nums:
                     if crop ==False:
+                        # frame = frame[100:660, 267:1040, :]
                         cv2.putText(frame, '#{0:08d}'.format(currentframe), (20, 120), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (124,205,124), 2)
-                        frame = crop_img(frame)
+                        
                     frame = cv2.resize(frame, (300,200), interpolation = cv2.INTER_AREA)
                     im_list_2d.append(frame)
                     # increasing counter so that it will
@@ -159,13 +160,13 @@ class Evaluator:
 
         
 
-    
+
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(description="video_evaluation")
-    parser.add_argument('--video_path', type=str, default='E:/Users/Raytine/Documents/蜂群/video/Demo/vrvideos/', help='source')  # file/folder, 0 for webcam
-    parser.add_argument('--save_path', type=str, default='E:/Users/Raytine/Documents/蜂群/video/Demo/vrvideos/images/', help='source')  # file/folder, 0 for webcam
-    parser.add_argument('--interval', type=int, default=5, help='source')  # file/folder, 0 for webcam
+    parser.add_argument('--video_path', type=str, default='E:/Users/Raytine/Documents/蜂群/VIDEO3/vrcut/vr02', help='source')  # file/folder, 0 for webcam
+    parser.add_argument('--save_path', type=str, default='E:/Users/Raytine/Documents/蜂群/VIDEO3/vrcut/images/', help='source')  # file/folder, 0 for webcam
+    parser.add_argument('--interval', type=int, default=1, help='source')  # file/folder, 0 for webcam
     
     args = parser.parse_args()
     files = glob.glob(args.video_path + '*.mp4')

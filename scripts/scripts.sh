@@ -16,3 +16,6 @@ python gen_neg.py --csv_file /data3/zzhang/tmp/anno1228.csv --video_path /data3/
 8、python tools/dataset_converters/coco_convert_darknet.py
 9、modify cocofilter.yaml
 10、python train.py --data data/cocofilter.yaml --cfg yolov5s.yaml --weights '' 
+
+####gen video empty anno
+python gen_anno.py --dirs /data2/zinan_xiong/gastritis_videos_for_test/ --hz mp4 --out /data3/zzhang/tmp/anno_cls_0104.csv
