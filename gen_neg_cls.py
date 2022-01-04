@@ -127,11 +127,9 @@ class Evaluator:
 
                 time_idx = self.time_in_break_time(break_time, frame_time)
                 all_fps_count[time_idx]  += 1
-                import pdb
-                pdb.set_trace()
                 if result['pred_label'] == 0 and self.save_train_images is not None:
-                    cv2.imwrite(os.path.join(self.save_train_images, f"{video}_{frame}.jpg"), crop_imgs) 
-                cv2.imwrite(os.path.join(fp_save_dirs[result['pred_label']], f"{video}_{frame}.jpg"), img)                
+                    cv2.imwrite(os.path.join(self.save_train_images, f"{frame}.jpg"), crop_imgs) 
+                cv2.imwrite(os.path.join(fp_save_dirs[result['pred_label']], f"{frame}.jpg"), img)                
 
                 if vid_path != vid_save_path:  # new video
                     w, h = img.shape[1], img.shape[0]
