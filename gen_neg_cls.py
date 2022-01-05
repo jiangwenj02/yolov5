@@ -120,7 +120,9 @@ class Evaluator:
                 result = inference_model(self.model, crop_imgs)
                 img = self.model.show_result(img_ori, result, show=False)
                 t2 = time_synchronized()
-                
+                print(t2-t1)
+                import pdb
+                pdb.set_trace()
                 frame_time = frame / float(fps)
                 # import pdb
                 # pdb.set_trace()                
