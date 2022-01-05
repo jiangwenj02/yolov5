@@ -120,9 +120,7 @@ class Evaluator:
                 result = inference_model(self.model, crop_imgs)
                 img = self.model.show_result(img_ori, result, show=False)
                 t2 = time_synchronized()
-                print(t2-t1)
-                import pdb
-                pdb.set_trace()
+                # print(t2-t1)
                 frame_time = frame / float(fps)
                 # import pdb
                 # pdb.set_trace()                
@@ -176,51 +174,6 @@ class Evaluator:
         else:
             return start <= x or x <= end
 
-
-class CSV_helper(object):
-    def __init__(self):
-        pass
-
-    def open_csv(self, path):
-        assert os.path.isfile(path), 'file not exist: {}'.format(path)
-        self.dataframe = pd.read_csv(path)
-
-    def get_annos(self):
-
-        self.video_names = self.dataframe['video name']
-        self.tp_annos = []
-
-        for index, name in enumerate(self.video_names):
-            tp = {
-                'video_name':name,
-                'tp_range':[]
-            }
-            if not pd.isna(name):
-
-                row = self.dataframe.iloc[index][5:]
-
-                i = 0
-                while i < len(row):
-
-                    if not (pd.isna(row[i]) or pd.isna(row[i + 1])):
-                        try:
-
-                            start = datetime.datetime.strptime(row[i], '%M:%S').time()
-                            end = datetime.datetime.strptime(row[i + 1], '%M:%S').time()
-
-                        except:
-
-                            start = datetime.datetime.strptime(row[i], '%H:%M:%S').time()
-                            end = datetime.datetime.strptime(row[i + 1], '%H:%M:%S').time()
-
-                        start_second = (start.hour * 60 + start.minute) * 60 + start.second
-                        end_second = (end.hour * 60 + end.minute) * 60 + end.second
-                        tp['tp_range'].append([start_second, end_second])
-
-                    i += 5
-                self.tp_annos.append(tp)
-        return self.tp_annos
-
 class CSV_helper_gastric(object):
     def __init__(self):
         pass
@@ -240,6 +193,9 @@ class CSV_helper_gastric(object):
         self.tp_annos = []
 
         for index, name in enumerate(self.video_names):
+            if index < 2:
+                continue
+
             tp = {
                 'video_name':name,
                 'tp_range':[],
