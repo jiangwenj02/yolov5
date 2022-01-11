@@ -193,8 +193,8 @@ class CSV_helper_gastric(object):
         self.tp_annos = []
 
         for index, name in enumerate(self.video_names):
-            if index < 2:
-                continue
+            # if index < 2:
+            #     continue
 
             tp = {
                 'video_name':name,
