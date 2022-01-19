@@ -10,7 +10,7 @@ python gen_neg.py --csv_file /data3/zzhang/tmp/anno1228.csv --video_path /data3/
 2、mmdetection python tools/dataset_converters/image2json.py
 3、 sed -e 's#^#/data3/zzhang/tmp/Others/Others_test/#' /data3/zzhang/tmp/Others/test.txt > /data3/zzhang/tmp/Others/test1006.txt
 4、 modify cocoempty.yaml
-5、 python test2.py --weights runs/train/exp21/weights/best.pt --save-json --data data/cocoempty.yaml --ann /data3/zzhang/tmp/Others/fp.json --conf-thres 0.5
+5、 python test2.py --weights runs/train/exp21/weights/best.pt --save-json --data data/cocoempty.yaml  --conf-thres 0.5 --ann /data3/zzhang/tmp/Others/fp.json
 6、 python tools/det2json.py #mmdetection
 7、python tools/merge_diff_json.py
 8、python tools/dataset_converters/coco_convert_darknet.py
