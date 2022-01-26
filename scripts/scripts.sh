@@ -19,4 +19,12 @@ python gen_neg.py --csv_file /data3/zzhang/tmp/anno1228.csv --video_path /data3/
 
 ####gen video empty anno
 python gen_anno.py --dirs /data2/zinan_xiong/gastritis_videos_for_test/ --hz mp4 --out /data3/zzhang/tmp/anno_cls_0104.csv
-python gen_neg_cls.py --csv_file /data3/zzhang/tmp/anno_cls_0104.csv  --video_path /data2/zinan_xiong/gastritis_videos_for_test/ --save_path ../mmclassification/work_dirs/shuffle_stomach_mix_hr/gastritis_videos_for_test/ --weights /data3/zzhang/mmclassification/work_dirs/shuffle_stomach_mix_hr/latest.pth --config /data3/zzhang/mmclassification/configs/diseased/shuffle_stomach_mix_hr.py
+python gen_neg_cls.py --csv_file /data3/zzhang/tmp/anno_cls_0125.csv  --video_path /data2/zinan_xiong/gastritis_videos_for_test_2/ \
+--save_path ../mmclassification/work_dirs/shuffle_stomach_mix_hr/gastritis_videos_for_test2/ \
+--weights /data3/zzhang/mmclassification/work_dirs/shuffle_stomach_mix_hr/latest.pth \
+--config /data3/zzhang/mmclassification/configs/diseased/shuffle_stomach_mix_hr.py
+
+python gen_neg_cls.py --csv_file /data3/zzhang/tmp/anno_cls_0125.csv  --video_path /data2/zinan_xiong/gastritis_videos_for_test_2/ \
+--save_path ../mmclassification/work_dirs/seresnet50_b32x8_stomach_mix_hr/gastritis_videos_for_test2/ \
+--weights /data3/zzhang/mmclassification/work_dirs/seresnet50_b32x8_stomach_mix_hr/latest.pth \
+--config /data3/zzhang/mmclassification/configs/diseased/seresnet50_b32x8_stomach_mix_hr.py
