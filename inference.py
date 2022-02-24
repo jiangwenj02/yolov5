@@ -73,6 +73,6 @@ if __name__ == '__main__':
     with open(files, 'r') as f:
         files = f.readlines()
     files = [file.strip() for file in files]
-    detector = YoloBase('./', './runs/train/exp18/weights/best.pt', size=640, save_dir='runs/hub/test', conf=0.25)  
+    detector = YoloBase('./', './runs/train/exp18/weights/best.pt', size=640, save_dir='runs/hub/test', conf=0.25, iou=0.45)  
     for file in files:   
         results = detector.predict(file)
