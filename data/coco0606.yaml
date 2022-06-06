@@ -20,11 +20,11 @@ test: /data3/zzhang/tmp/gastric_2cls_06062022_combine/disease_free.txt  # 20288 
 # test: data/erosiveulcer/test.txt  # 20288 of 40670 images, submit to https://competitions.codalab.org/competitions/20794
 
 # number of classes
-nc: 2
+nc: 3
 
 # class names
-# names: ['erosive', 'ulcer', 'other']
-names: ['erosive', 'ulcer']
+names: ['erosive', 'ulcer', 'other']
+# names: ['erosive', 'ulcer']
 
 
 # [ 'person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train', 'truck', 'boat', 'traffic light',
