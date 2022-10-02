@@ -11,6 +11,14 @@ python gen_neg.py --csv_file /data3/zzhang/tmp/anno1228.csv --video_path /data3/
 python gen_neg.py --csv_file /data3/zzhang/tmp/anno_cls_0122.csv --video_path /data3/zzhang/tmp/yanshi --save_path /data3/zzhang/tmp/erosive_ulcer_videos0216/yanshi/ --weights runs/train/exp39/weights/last.pt --conf-thres 0.5
 python gen_neg.py --csv_file /data3/zzhang/tmp/anno1228.csv --video_path /data3/zzhang/tmp/test-video-1226/ --save_path /data3/zzhang/tmp/erosive_ulcer_videos0216/erosive_ulcer_videos/ --weights runs/train/exp39/weights/last.pt --conf-thres 0.5
 python gen_neg_images.py --image_path /data3/zzhang/tmp/gastric_3cls_0921/ --save_path /data3/zzhang/tmp/gastric_3cls_0921_det_0216/  --weights runs/train/exp39/weights/last.pt --conf-thres 0.5
+### 20220302
+python test2.py --weights runs/train/exp39/weights/best.pt --save-json --data data/coco.yaml --ann /data3/zzhang/annotation/erosiveulcer_fine/test.json
+
+### 20220525
+python gen_neg_cls.py --csv_file /data3/zzhang/tmp/anno_cls_0525.csv  --video_path /data2/zinan_xiong/CAG_8/ \
+--save_path ../mmclassification/work_dirs/shuffle_stomach_mix_hr/CAG_8/ \
+--weights /data3/zzhang/mmclassification/work_dirs/shuffle_stomach_mix_hr/latest.pth \
+--config /data3/zzhang/mmclassification/configs/diseased/shuffle_stomach_mix_hr.py
 
 #20221002
 python gen_anno.py --dirs  /data3/xiaolong_liang/data/scenes_issues/video_series/fuji_60-1018_62-1310 --out /data3/zzhang/annotation/video_anno1002/fuji_60-1018_62-1310.csv

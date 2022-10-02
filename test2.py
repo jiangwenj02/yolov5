@@ -75,7 +75,7 @@ def test(data,
         with open(data) as f:
             data = yaml.safe_load(f)
     check_dataset(data)  # check
-    nc = 1 if single_cls else int(data['nc'])  # number of classes
+    nc = 1 if single_cls else int( data['nc'])  # number of classes
     iouv = torch.linspace(0.5, 0.95, 10).to(device)  # iou vector for mAP@0.5:0.95
     niou = iouv.numel()
 
@@ -323,7 +323,7 @@ if __name__ == '__main__':
     parser.add_argument('--name', default='exp', help='save to project/name')
     parser.add_argument('--exist-ok', action='store_true', help='existing project/name ok, do not increment')
     opt = parser.parse_args()
-    opt.save_json |= opt.data.endswith('coco.yaml')
+    # opt.save_json |= opt.data.endswith('coco.yaml')
     opt.data = check_file(opt.data)  # check file
     print(opt)
     check_requirements(exclude=('tensorboard', 'pycocotools', 'thop'))
