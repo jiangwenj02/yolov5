@@ -12,6 +12,9 @@ python gen_neg.py --csv_file /data3/zzhang/tmp/anno_cls_0122.csv --video_path /d
 python gen_neg.py --csv_file /data3/zzhang/tmp/anno1228.csv --video_path /data3/zzhang/tmp/test-video-1226/ --save_path /data3/zzhang/tmp/erosive_ulcer_videos0216/erosive_ulcer_videos/ --weights runs/train/exp39/weights/last.pt --conf-thres 0.5
 python gen_neg_images.py --image_path /data3/zzhang/tmp/gastric_3cls_0921/ --save_path /data3/zzhang/tmp/gastric_3cls_0921_det_0216/  --weights runs/train/exp39/weights/last.pt --conf-thres 0.5
 
+#20221002
+python gen_anno.py --dirs  /data3/xiaolong_liang/data/scenes_issues/video_series/fuji_60-1018_62-1310 --out /data3/zzhang/annotation/video_anno1002/fuji_60-1018_62-1310.csv
+python gen_neg.py --csv_file /data3/zzhang/annotation/video_anno1002/fuji_60-1018_62-1310.csv --video_path /data3/xiaolong_liang/data/scenes_issues/video_series/fuji_60-1018_62-1310 --save_path /data3/zzhang/tmp/erosive_ulcer_videos1002/fuji_60-1018_62-1310 --weights runs/train/yolov76/weights/last.pt  --conf-thres 0.5 &&  python gen_neg.py --csv_file /data3/zzhang/annotation/video_anno1002/fuji_0-960_15-1264.csv --video_path /data3/xiaolong_liang/data/scenes_issues/video_series/fuji_0-960_15-1264 --save_path /data3/zzhang/tmp/erosive_ulcer_videos1002/fuji_0-960_15-1264 --weights runs/train/yolov76/weights/last.pt  --conf-thres 0.5
 ####adding new data
 1、ls images/ > new.txt
 2、mmdetection python tools/dataset_converters/image2json.py
